@@ -37,6 +37,4 @@ public class PendidikanDto {
 	public void setKodePerson(Integer kodePerson) {
 		this.kodePerson = kodePerson;
 	}
-	
-	
 }

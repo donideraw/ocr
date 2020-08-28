@@ -55,8 +55,4 @@ public class Person {
 	public void setAlamat(String alamat) {
 		this.alamat = alamat;
 	}
-	
-	
-	
-	
 }

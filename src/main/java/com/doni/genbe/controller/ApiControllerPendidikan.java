@@ -13,7 +13,6 @@ import com.doni.genbe.model.dto.PendidikanDto;
 import com.doni.genbe.model.dto.StatusDto;
 import com.doni.genbe.model.entity.Pendidikan;
 import com.doni.genbe.repository.PendidikanRepository;
-//import com.doni.genbe.model.entity.Person;
 import com.doni.genbe.repository.PersonRepository;
 
 @RestController
@@ -26,12 +25,6 @@ public class ApiControllerPendidikan {
 	@Autowired
 	private PendidikanRepository pendidikanRepo;
 	
-//	@Autowired
-//	public public ApiControllerPendidikan() {
-//		this.personRepo = personRepo;
-//	}
-	
-	
 	@PostMapping("/{idperson}") 
 		public StatusDto insertPendidikan(@RequestBody List<PendidikanDto> dtoList, @PathVariable Integer idperson) {
 		int count = 0;
@@ -41,7 +34,6 @@ public class ApiControllerPendidikan {
 			pendidikanRepo.save(didik);
 			count++;
 		}
-		
 		if (count == dtoList.size()) {
 			return statusBerhasil();
 		} else {
@@ -53,7 +45,6 @@ public class ApiControllerPendidikan {
 		StatusDto dto = new StatusDto();
 		dto.setStatus("true");
 		dto.setMessage("data berhasil masuk");
-		
 		return dto;
 	}
 	
@@ -64,8 +55,6 @@ public class ApiControllerPendidikan {
 		
 		return dto;
 	}
-	
-	
 	
 	private Pendidikan convertToEntity (PendidikanDto dto) {
 		Pendidikan didik = new Pendidikan();

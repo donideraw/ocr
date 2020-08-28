@@ -75,7 +75,4 @@ public class Biodata {
 	public void setPerson(Person person) {
 		this.person = person;
 	}
-	
-	
-	
 }

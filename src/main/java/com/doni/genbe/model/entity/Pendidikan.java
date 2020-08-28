@@ -80,6 +80,4 @@ public class Pendidikan {
 	public void setTahunLulus(String tahunLulus) {
 		this.tahunLulus = tahunLulus;
 	}
-	
-	
 }

@@ -11,7 +11,6 @@ public class PersonDto {
 	private String tempatLahir;
 	private Integer kodePerson;
 	
-	
 	public String getNik() {
 		return nik;
 	}
@@ -54,7 +53,4 @@ public class PersonDto {
 	public void setKodePerson(Integer kodePerson) {
 		this.kodePerson = kodePerson;
 	}
-	
-	
-	
 }
