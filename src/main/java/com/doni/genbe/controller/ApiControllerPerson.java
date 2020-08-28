@@ -1,5 +1,9 @@
 package com.doni.genbe.controller;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 //import java.sql.Date;
 //import java.text.SimpleDateFormat;
 //import java.time.LocalDate;
@@ -8,6 +12,7 @@ package com.doni.genbe.controller;
 //import java.time.ZoneId;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,19 +23,23 @@ import com.doni.genbe.model.dto.StatusDto;
 import com.doni.genbe.model.entity.Biodata;
 import com.doni.genbe.model.entity.Person;
 import com.doni.genbe.repository.BiodataRepository;
+import com.doni.genbe.repository.PendidikanRepository;
 import com.doni.genbe.repository.PersonRepository;
 //import com.doni.genbe.service.PersonService;
 //import com.doni.genbe.service.PersonServiceImpl;
 
 @RestController
 @RequestMapping("/person")
-public class ApiController {
+public class ApiControllerPerson {
 	
 	@Autowired
 	private PersonRepository personRepository;
 	
 	@Autowired
 	private BiodataRepository biodataRepository;
+	
+	@Autowired
+	private PendidikanRepository pendidikanRepository;
 	
 //	@Autowired
 //	private PersonService personService = new PersonServiceImpl();
@@ -41,21 +50,27 @@ public class ApiController {
 //		this.biodataRepository = biodataRepository;
 //	}
 	
+	@GetMapping("/{id}")
+	
+	
 	@PostMapping
 	public StatusDto insert(@RequestBody PersonDto dto) {
-//		Date birth = dto.getTgl();
-//		LocalDate past = birth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//		LocalDate now = LocalDate.now();
-//		Period age = Period.between(past, now);
-//		Integer umur = age.getYears();
+		Date birth = dto.getTgl();
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(birth);
+		
+		int tahun = calendar.get(Calendar.YEAR);
+		int bulan = calendar.get(Calendar.MONTH)+1;
+		int hari = calendar.get(Calendar.DAY_OF_MONTH);
+		
 		
 		if (dto.getNik().length() != 16) {
 		
 			return statusGagalNik();
 			
-//		} else if (umur < 30) {
-//			
-//			return statusGagalUmur();
+		} else if (2020 - tahun < 30 || (2020 - tahun == 30 && bulan < 8 ) || (2020 - tahun == 30 && bulan == 8 && hari <28)) {
+			
+			return statusGagalUmur();
 		}
 		
 		else {
@@ -85,13 +100,13 @@ public class ApiController {
 		return dto;
 	}
 	
-//	private StatusDto statusGagalUmur() {
-//		StatusDto dto = new StatusDto();
-//		dto.setStatus("false");
-//		dto.setMessage("data gagal masuk, umur dibawah 30 tahun");
-//		
-//		return dto;
-//	}
+	private StatusDto statusGagalUmur() {
+		StatusDto dto = new StatusDto();
+		dto.setStatus("false");
+		dto.setMessage("data gagal masuk, umur dibawah 30 tahun");
+		
+		return dto;
+	}
 	
 	private Person convertToEntityPerson (PersonDto dto) {
 		Person person = new Person();
