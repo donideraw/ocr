@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "t_biodata")
 public class Biodata {
@@ -24,6 +26,7 @@ public class Biodata {
 	private String nomorHandphone;
 	
 	@Column(name = "tanggal_lahir", nullable = false)
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date tanggalLahir;
 	
 	@Column(name = "tempat_lahir", length = 50)
