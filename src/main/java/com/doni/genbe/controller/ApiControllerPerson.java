@@ -16,12 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.doni.genbe.model.dto.GetDto;
 import com.doni.genbe.model.dto.PersonDto;
+import com.doni.genbe.model.dto.ResponseDto;
 import com.doni.genbe.model.dto.StatusDto;
 import com.doni.genbe.model.entity.Biodata;
 import com.doni.genbe.model.entity.Person;
 import com.doni.genbe.repository.BiodataRepository;
 import com.doni.genbe.repository.PendidikanRepository;
 import com.doni.genbe.repository.PersonRepository;
+import com.doni.genbe.service.PersonService;
+import com.doni.genbe.service.PersonServiceImpl;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
@@ -38,29 +41,33 @@ public class ApiControllerPerson {
 
 	@Autowired
 	private PendidikanRepository pendidikanRepository;
+	
+	@Autowired
+	private PersonService personService = new PersonServiceImpl();
 
 	@GetMapping("/{nik}")
 	public MappingJacksonValue get(@PathVariable String nik) {
+		ResponseDto dt = new ResponseDto();
 		GetDto dto = new GetDto();
 		if (nik.length() != 16) {
-			dto.setStatus("false");
-			dto.setMessage("data gagal masuk, jumlah digit nik tidak sama dengan 16");
+			dt.setStatus("false");
+			dt.setMessage("data gagal masuk, jumlah digit nik tidak sama dengan 16");
 			SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("status","message");
-			FilterProvider filters = new SimpleFilterProvider().addFilter("GetDtoFilter", filter);
-			MappingJacksonValue mapping = new MappingJacksonValue(dto);
+			FilterProvider filters = new SimpleFilterProvider().addFilter("ResponseDtoFilter", filter);
+			MappingJacksonValue mapping = new MappingJacksonValue(dt);
 			mapping.setFilters(filters);
 			return mapping;
 		} else if (personRepository.getNamaByNik(nik) == null) {
-			dto.setStatus("false");
-			dto.setMessage("data dengan nik " + nik + " tidak ditemukan");
+			dt.setStatus("false");
+			dt.setMessage("data dengan nik " + nik + " tidak ditemukan");
 			SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("status","message");
-			FilterProvider filters = new SimpleFilterProvider().addFilter("GetDtoFilter", filter);
-			MappingJacksonValue mapping = new MappingJacksonValue(dto);
+			FilterProvider filters = new SimpleFilterProvider().addFilter("ResponseDtoFilter", filter);
+			MappingJacksonValue mapping = new MappingJacksonValue(dt);
 			mapping.setFilters(filters);
 			return mapping;
 		} else {
-			dto.setStatus("true");
-			dto.setMessage("success");
+			dt.setStatus("true");
+			dt.setMessage("success");
 			dto.setAddress(personRepository.getAlamatByNik(nik));
 			dto.setName(personRepository.getNamaByNik(nik));
 			dto.setNik(personRepository.getNikByNik(nik));
@@ -75,10 +82,11 @@ public class ApiControllerPerson {
 
 			dto.setUmur(String.valueOf(age));
 			dto.setPendidikan_terakhir(pendidikanRepository.getPendidikanByNik(nik));
+			dt.setData(dto);
 		}
-		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("status","message", "nik", "name", "addres", "hp", "tgl", "tempatLahir", "umur", "pendidikan_terakhir");
-		FilterProvider filters = new SimpleFilterProvider().addFilter("GetDtoFilter", filter);
-		MappingJacksonValue mapping = new MappingJacksonValue(dto);
+		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("status","message","data");
+		FilterProvider filters = new SimpleFilterProvider().addFilter("ResponseDtoFilter", filter);
+		MappingJacksonValue mapping = new MappingJacksonValue(dt);
 		mapping.setFilters(filters);
 		return mapping;
 	}
@@ -95,15 +103,17 @@ public class ApiControllerPerson {
 
 		if (dto.getNik().length() != 16) {
 			return statusGagalNik();
-		} else if (2020 - tahun < 30 || (2020 - tahun == 30 && bulan < 8)
-				|| (2020 - tahun == 30 && bulan == 8 && hari < 28)) {
+		} else if (2020 - tahun < 30 || (2020 - tahun == 30 && bulan > 8)
+				|| (2020 - tahun == 30 && bulan == 8 && hari > 29)) {
 			return statusGagalUmur();
 		} else {
 			Person person = convertToEntityPerson(dto);
-			personRepository.save(person);
+//			personRepository.save(person);
+			personService.insertPerson(person);
 			dto.setKodePerson(person.getKodePerson());
 			Biodata biodata = convertToEntity(dto);
-			biodataRepository.save(biodata);
+//			biodataRepository.save(biodata);
+			personService.insertBiodata(biodata);
 		}
 		return statusBerhasil();
 	}

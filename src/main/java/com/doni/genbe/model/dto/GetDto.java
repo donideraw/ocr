@@ -2,12 +2,8 @@ package com.doni.genbe.model.dto;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 
-@JsonFilter("GetDtoFilter")
 public class GetDto {
-	private String status;
-	private String message;
 	
 	private String nik;
 	private String name;
@@ -18,18 +14,6 @@ public class GetDto {
 	private String umur;
 	private String pendidikan_terakhir;
 	
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	public String getMessage() {
-		return message;
-	}
-	public void setMessage(String message) {
-		this.message = message;
-	}
 	public String getNik() {
 		return nik;
 	}
