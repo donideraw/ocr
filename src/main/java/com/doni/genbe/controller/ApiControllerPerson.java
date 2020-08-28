@@ -3,6 +3,8 @@ package com.doni.genbe.controller;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+//import java.util.List;
+//import java.util.stream.Collectors;
 
 //import java.sql.Date;
 //import java.text.SimpleDateFormat;
@@ -12,18 +14,20 @@ import java.util.GregorianCalendar;
 //import java.time.ZoneId;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+//import com.doni.genbe.model.dto.GetDto;
 import com.doni.genbe.model.dto.PersonDto;
 import com.doni.genbe.model.dto.StatusDto;
 import com.doni.genbe.model.entity.Biodata;
 import com.doni.genbe.model.entity.Person;
 import com.doni.genbe.repository.BiodataRepository;
-import com.doni.genbe.repository.PendidikanRepository;
+//import com.doni.genbe.repository.PendidikanRepository;
 import com.doni.genbe.repository.PersonRepository;
 //import com.doni.genbe.service.PersonService;
 //import com.doni.genbe.service.PersonServiceImpl;
@@ -38,8 +42,11 @@ public class ApiControllerPerson {
 	@Autowired
 	private BiodataRepository biodataRepository;
 	
-	@Autowired
-	private PendidikanRepository pendidikanRepository;
+//	@Autowired
+//	private PendidikanRepository pendidikanRepository;
+	
+//	@Autowired
+//	private int umur;
 	
 //	@Autowired
 //	private PersonService personService = new PersonServiceImpl();
@@ -50,7 +57,32 @@ public class ApiControllerPerson {
 //		this.biodataRepository = biodataRepository;
 //	}
 	
-	@GetMapping("/{id}")
+//	@GetMapping("/{nik}")
+//	public List<GetDto> get(@PathVariable String nik) {
+//		List<Person> personList = personRepository.findAllByPersonNik(nik);
+//		List<GetDto> dtoList = personList.stream().map(this::convertToDtoPerson).collect(Collectors.toList());
+////		
+//		
+//		return dtoList;
+//		
+//	}
+	
+//	private GetDto convertToDtoPerson (Person person) {
+//		GetDto dto = new GetDto();
+//		dto.setName(person.getNama());
+//		dto.setAddress(person.getAlamat());
+//		dto.setNik(person.getNik());
+//		return dto;
+//	}
+//	
+//	private GetDto convertToDtoBiodata (Biodata biodata) {
+//		GetDto dto = new GetDto();
+//		dto.setHp(biodata.getNomorHandphone());
+//		dto.setTempatLahir(biodata.getTempatLahir());
+//		dto.setUmur(String.valueOf(this.umur));
+//		return dto;
+//	}
+//	
 	
 	
 	@PostMapping
@@ -62,25 +94,18 @@ public class ApiControllerPerson {
 		int tahun = calendar.get(Calendar.YEAR);
 		int bulan = calendar.get(Calendar.MONTH)+1;
 		int hari = calendar.get(Calendar.DAY_OF_MONTH);
-		
-		
+				
 		if (dto.getNik().length() != 16) {
-		
 			return statusGagalNik();
-			
 		} else if (2020 - tahun < 30 || (2020 - tahun == 30 && bulan < 8 ) || (2020 - tahun == 30 && bulan == 8 && hari <28)) {
-			
 			return statusGagalUmur();
-		}
-		
-		else {
+		} else {
 			Person person = convertToEntityPerson(dto);
 			personRepository.save(person);
 			dto.setKodePerson(person.getKodePerson());
 			Biodata biodata = convertToEntity(dto);
 			biodataRepository.save(biodata);
 		}
-		
 		return statusBerhasil();
 	}
 	
@@ -88,7 +113,6 @@ public class ApiControllerPerson {
 		StatusDto dto = new StatusDto();
 		dto.setStatus("true");
 		dto.setMessage("data berhasil masuk");
-		
 		return dto;
 	}
 	
@@ -96,7 +120,6 @@ public class ApiControllerPerson {
 		StatusDto dto = new StatusDto();
 		dto.setStatus("false");
 		dto.setMessage("data gagal masuk, jumlah digit nik tidak sama dengan 16");
-		
 		return dto;
 	}
 	
@@ -104,7 +127,6 @@ public class ApiControllerPerson {
 		StatusDto dto = new StatusDto();
 		dto.setStatus("false");
 		dto.setMessage("data gagal masuk, umur dibawah 30 tahun");
-		
 		return dto;
 	}
 	
@@ -124,7 +146,6 @@ public class ApiControllerPerson {
 		biodata.setTanggalLahir(dto.getTgl());
 		biodata.setTempatLahir(dto.getTempatLahir());
 		biodata.setPerson(person);
-		
 		return biodata;	
 	}
 	

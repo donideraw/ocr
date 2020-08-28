@@ -34,20 +34,33 @@ public class ApiControllerPendidikan {
 	
 	@PostMapping("/{idperson}") 
 		public StatusDto insertPendidikan(@RequestBody List<PendidikanDto> dtoList, @PathVariable Integer idperson) {
-		
+		int count = 0;
 		for (int i = 0; i<dtoList.size(); i++) {
 			Pendidikan didik = convertToEntity(dtoList.get(i));
 			didik.setPerson(personRepo.findById(idperson).get());
 			pendidikanRepo.save(didik);
-		
+			count++;
 		}
-		return statusBerhasil();
+		
+		if (count == dtoList.size()) {
+			return statusBerhasil();
+		} else {
+			return statusGagal();
+		}
 	}
 	
 	private StatusDto statusBerhasil() {
 		StatusDto dto = new StatusDto();
 		dto.setStatus("true");
 		dto.setMessage("data berhasil masuk");
+		
+		return dto;
+	}
+	
+	private StatusDto statusGagal() {
+		StatusDto dto = new StatusDto();
+		dto.setStatus("false");
+		dto.setMessage("data gagal masuk");
 		
 		return dto;
 	}
