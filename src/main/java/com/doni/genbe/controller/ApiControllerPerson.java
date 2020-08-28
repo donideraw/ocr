@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 //import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,9 @@ import com.doni.genbe.model.entity.Person;
 import com.doni.genbe.repository.BiodataRepository;
 import com.doni.genbe.repository.PendidikanRepository;
 import com.doni.genbe.repository.PersonRepository;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 @RestController
 @RequestMapping("/person")
@@ -36,14 +40,24 @@ public class ApiControllerPerson {
 	private PendidikanRepository pendidikanRepository;
 
 	@GetMapping("/{nik}")
-	public GetDto get(@PathVariable String nik) {
+	public MappingJacksonValue get(@PathVariable String nik) {
 		GetDto dto = new GetDto();
 		if (nik.length() != 16) {
 			dto.setStatus("false");
 			dto.setMessage("data gagal masuk, jumlah digit nik tidak sama dengan 16");
+			SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("status","message");
+			FilterProvider filters = new SimpleFilterProvider().addFilter("GetDtoFilter", filter);
+			MappingJacksonValue mapping = new MappingJacksonValue(dto);
+			mapping.setFilters(filters);
+			return mapping;
 		} else if (personRepository.getNamaByNik(nik) == null) {
 			dto.setStatus("false");
 			dto.setMessage("data dengan nik " + nik + " tidak ditemukan");
+			SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("status","message");
+			FilterProvider filters = new SimpleFilterProvider().addFilter("GetDtoFilter", filter);
+			MappingJacksonValue mapping = new MappingJacksonValue(dto);
+			mapping.setFilters(filters);
+			return mapping;
 		} else {
 			dto.setStatus("true");
 			dto.setMessage("success");
@@ -62,7 +76,11 @@ public class ApiControllerPerson {
 			dto.setUmur(String.valueOf(age));
 			dto.setPendidikan_terakhir(pendidikanRepository.getPendidikanByNik(nik));
 		}
-		return dto;
+		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("status","message", "nik", "name", "addres", "hp", "tgl", "tempatLahir", "umur", "pendidikan_terakhir");
+		FilterProvider filters = new SimpleFilterProvider().addFilter("GetDtoFilter", filter);
+		MappingJacksonValue mapping = new MappingJacksonValue(dto);
+		mapping.setFilters(filters);
+		return mapping;
 	}
 
 	@PostMapping

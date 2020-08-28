@@ -2,6 +2,9 @@ package com.doni.genbe.model.dto;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+
+@JsonFilter("GetDtoFilter")
 public class GetDto {
 	private String status;
 	private String message;
