@@ -3,7 +3,7 @@ package com.doni.genbe.controller;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
+//import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,26 +34,6 @@ public class ApiControllerPerson {
 
 	@Autowired
 	private PendidikanRepository pendidikanRepository;
-
-//	@GetMapping("/{nik}")
-//	public GetDto get(@PathVariable String nik) {
-//		GetDto dto = new GetDto();
-//		dto.setAddress(personRepository.getAlamatByNik(nik));
-//		dto.setName(personRepository.getNamaByNik(nik));
-//		dto.setNik(personRepository.getNikByNik(nik));
-//		dto.setHp(biodataRepository.getNoHpByNik(nik));
-//		dto.setTgl(biodataRepository.getTanggalLahirByNik(nik));
-//		dto.setTempatLahir(biodataRepository.getTempatLahirByNik(nik));
-//		
-//		Date birth = biodataRepository.getTanggalLahirByNik(nik);
-//		Calendar calendar = new GregorianCalendar();
-//		calendar.setTime(birth);
-//		Integer age = 2020 - calendar.get(Calendar.YEAR);
-//		
-//		dto.setUmur(String.valueOf(age));
-//		dto.setPendidikan_terakhir(pendidikanRepository.getPendidikanByNik(nik));
-//		return dto;
-//	}
 
 	@GetMapping("/{nik}")
 	public GetDto get(@PathVariable String nik) {

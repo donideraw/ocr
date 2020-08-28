@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.doni.genbe.model.dto.PendidikanDto;
 import com.doni.genbe.model.dto.StatusDto;
 import com.doni.genbe.model.entity.Pendidikan;
-import com.doni.genbe.repository.PendidikanRepository;
+//import com.doni.genbe.repository.PendidikanRepository;
 import com.doni.genbe.repository.PersonRepository;
+import com.doni.genbe.service.PersonService;
+import com.doni.genbe.service.PersonServiceImpl;
 
 @RestController
 @RequestMapping("/pendidikan")
@@ -22,8 +24,11 @@ public class ApiControllerPendidikan {
 	@Autowired
 	private PersonRepository personRepo;
 	
+//	@Autowired
+//	private PendidikanRepository pendidikanRepo;
+	
 	@Autowired
-	private PendidikanRepository pendidikanRepo;
+	private PersonService personService = new PersonServiceImpl();
 	
 	@PostMapping("/{idperson}") 
 		public StatusDto insertPendidikan(@RequestBody List<PendidikanDto> dtoList, @PathVariable Integer idperson) {
@@ -31,7 +36,7 @@ public class ApiControllerPendidikan {
 		for (int i = 0; i<dtoList.size(); i++) {
 			Pendidikan didik = convertToEntity(dtoList.get(i));
 			didik.setPerson(personRepo.findById(idperson).get());
-			pendidikanRepo.save(didik);
+			personService.insertPendidikan(didik);
 			count++;
 		}
 		if (count == dtoList.size()) {

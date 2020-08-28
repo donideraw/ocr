@@ -5,6 +5,7 @@ import java.util.Date;
 public class GetDto {
 	private String status;
 	private String message;
+	
 	private String nik;
 	private String name;
 	private String address;

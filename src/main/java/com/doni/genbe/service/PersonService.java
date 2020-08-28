@@ -1,9 +1,14 @@
 package com.doni.genbe.service;
 
-import com.doni.genbe.model.dto.StatusDto;
-import com.doni.genbe.model.entity.Biodata;
+
+//import java.util.List;
+
+//import com.doni.genbe.model.dto.PendidikanDto;
+//import com.doni.genbe.model.dto.StatusDto;
+//import com.doni.genbe.model.entity.Biodata;
 //import com.doni.genbe.model.entity.Person;
+import com.doni.genbe.model.entity.Pendidikan;
 
 public interface PersonService {
-	public StatusDto insertPerson (Biodata biodata);
+	public void insertPendidikan (Pendidikan didik);
 }
