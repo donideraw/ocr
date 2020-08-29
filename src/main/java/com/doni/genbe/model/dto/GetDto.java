@@ -2,7 +2,6 @@ package com.doni.genbe.model.dto;
 
 import java.util.Date;
 
-
 public class GetDto {
 	
 	private String nik;

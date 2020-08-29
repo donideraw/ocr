@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.doni.genbe.model.dto.PendidikanDto;
 import com.doni.genbe.model.dto.StatusDto;
 import com.doni.genbe.model.entity.Pendidikan;
-//import com.doni.genbe.repository.PendidikanRepository;
 import com.doni.genbe.repository.PersonRepository;
 import com.doni.genbe.service.PersonService;
 import com.doni.genbe.service.PersonServiceImpl;
@@ -23,9 +22,6 @@ public class ApiControllerPendidikan {
 	
 	@Autowired
 	private PersonRepository personRepo;
-	
-//	@Autowired
-//	private PendidikanRepository pendidikanRepo;
 	
 	@Autowired
 	private PersonService personService = new PersonServiceImpl();

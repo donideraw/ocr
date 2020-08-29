@@ -1,13 +1,11 @@
 package com.doni.genbe.service;
 
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.doni.genbe.model.entity.Biodata;
-//import com.doni.genbe.model.dto.PersonDto;
 import com.doni.genbe.model.entity.Pendidikan;
 import com.doni.genbe.model.entity.Person;
 import com.doni.genbe.repository.BiodataRepository;

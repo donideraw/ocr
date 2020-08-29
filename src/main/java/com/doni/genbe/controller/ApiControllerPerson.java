@@ -3,7 +3,6 @@ package com.doni.genbe.controller;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-//import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
@@ -108,11 +107,9 @@ public class ApiControllerPerson {
 			return statusGagalUmur();
 		} else {
 			Person person = convertToEntityPerson(dto);
-//			personRepository.save(person);
 			personService.insertPerson(person);
 			dto.setKodePerson(person.getKodePerson());
 			Biodata biodata = convertToEntity(dto);
-//			biodataRepository.save(biodata);
 			personService.insertBiodata(biodata);
 		}
 		return statusBerhasil();
