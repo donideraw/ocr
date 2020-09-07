@@ -26,7 +26,7 @@ public class Biodata {
 	private String nomorHandphone;
 	
 	@Column(name = "tanggal_lahir", nullable = false)
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="dd-MM-yyyy")
 	private Date tanggalLahir;
 	
 	@Column(name = "tempat_lahir", length = 50)

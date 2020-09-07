@@ -1,4 +1,4 @@
-package com.doni.genbe.controller;
+package com.doni.genbe.controller.restapi;
 
 import java.util.List;
 
@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.doni.genbe.model.dto.PendidikanDto;
 import com.doni.genbe.model.dto.StatusDto;
-import com.doni.genbe.model.entity.Pendidikan;
-import com.doni.genbe.repository.PersonRepository;
 import com.doni.genbe.service.PersonService;
 import com.doni.genbe.service.PersonServiceImpl;
 
@@ -21,23 +19,14 @@ import com.doni.genbe.service.PersonServiceImpl;
 public class ApiControllerPendidikan {
 	
 	@Autowired
-	private PersonRepository personRepo;
-	
-	@Autowired
 	private PersonService personService = new PersonServiceImpl();
 	
 	@PostMapping("/{idperson}") 
 		public StatusDto insertPendidikan(@RequestBody List<PendidikanDto> dtoList, @PathVariable Integer idperson) {
-		int count = 0;
-		for (int i = 0; i<dtoList.size(); i++) {
-			Pendidikan didik = convertToEntity(dtoList.get(i));
-			didik.setPerson(personRepo.findById(idperson).get());
-			personService.insertPendidikan(didik);
-			count++;
-		}
-		if (count == dtoList.size()) {
-			return statusBerhasil();
-		} else {
+		try {
+		personService.insertPendidikan(dtoList, idperson);
+		return statusBerhasil();
+		} catch (Exception e){
 			return statusGagal();
 		}
 	}
@@ -57,12 +46,4 @@ public class ApiControllerPendidikan {
 		return dto;
 	}
 	
-	private Pendidikan convertToEntity (PendidikanDto dto) {
-		Pendidikan didik = new Pendidikan();
-		didik.setJenjang(dto.getJenjang());
-		didik.setInstitusi(dto.getInstitusi());
-		didik.setTahunMasuk(dto.getMasuk());
-		didik.setTahunLulus(dto.getLulus());
-		return didik;
-	}
 }

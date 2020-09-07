@@ -1,4 +1,4 @@
-package com.doni.genbe.controller;
+package com.doni.genbe.controller.restapi;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -17,7 +17,6 @@ import com.doni.genbe.model.dto.GetDto;
 import com.doni.genbe.model.dto.PersonDto;
 import com.doni.genbe.model.dto.ResponseDto;
 import com.doni.genbe.model.dto.StatusDto;
-import com.doni.genbe.model.entity.Biodata;
 import com.doni.genbe.model.entity.Person;
 import com.doni.genbe.repository.BiodataRepository;
 import com.doni.genbe.repository.PendidikanRepository;
@@ -90,7 +89,7 @@ public class ApiControllerPerson {
 		return mapping;
 	}
 
-	@PostMapping
+	@PostMapping("/insert")
 	public StatusDto insert(@RequestBody PersonDto dto) {
 		Date birth = dto.getTgl();
 		Calendar calendar = new GregorianCalendar();
@@ -107,10 +106,7 @@ public class ApiControllerPerson {
 			return statusGagalUmur();
 		} else {
 			Person person = convertToEntityPerson(dto);
-			personService.insertPerson(person);
-			dto.setKodePerson(person.getKodePerson());
-			Biodata biodata = convertToEntity(dto);
-			personService.insertBiodata(biodata);
+			personService.insertPerson(person, dto);
 		}
 		return statusBerhasil();
 	}
@@ -142,17 +138,6 @@ public class ApiControllerPerson {
 		person.setNama(dto.getName());
 		person.setAlamat(dto.getAddress());
 		return person;
-	}
-
-	private Biodata convertToEntity(PersonDto dto) {
-		Person person = new Person();
-		person = personRepository.findById(dto.getKodePerson()).get();
-		Biodata biodata = new Biodata();
-		biodata.setNomorHandphone(dto.getHp());
-		biodata.setTanggalLahir(dto.getTgl());
-		biodata.setTempatLahir(dto.getTempatLahir());
-		biodata.setPerson(person);
-		return biodata;
 	}
 
 }
