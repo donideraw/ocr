@@ -32,9 +32,9 @@ public class PersonServiceImpl implements PersonService {
 	public void insertPendidikan(List<PendidikanDto> dtoList, Integer idperson) {
 		for (int i = 0; i<dtoList.size(); i++) {
 			Pendidikan didik = convertToEntity(dtoList.get(i));
-//			if (didik.getJenjang() == null || didik.getInstitusi() == null || didik.getTahunMasuk() == null || didik.getTahunLulus() == null) {
-//				Integer.parseInt("saya");
-//				}
+			if (didik.getJenjang() == "" || didik.getInstitusi() == "" || didik.getTahunMasuk() == "" || didik.getTahunLulus() == "") {
+				Integer.parseInt("saya");
+				}
 			didik.setPerson(personRepository.findById(idperson).get());
 			pendidikanRepo.save(didik);
 		}
