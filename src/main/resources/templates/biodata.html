@@ -230,7 +230,8 @@
 						<h3 class="card-title">Isi Biodata</h3>
 					</div>
 					<div class="container">
-						<br>
+					<form role="form" id="formku">
+						<div class="card-body">
 						<div class="row">
 							<div class="col-sm">
 
@@ -268,10 +269,12 @@
 								</div>
 							</div>
 						</div>
+						</div>
+						</form>
 					</div>
 
 					<div class="card-footer" align="right">
-						<button type="button" class="btn btn-primary" id="add-pengarang">Submit</button>
+						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Simpan</button>
 					</div>
 					<!--  <button id="add-pengarang" type="button" >tambah</button> -->
 
@@ -279,6 +282,27 @@
 				</div>
 			</div>
 		</div>
+		
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		      <h4 class="modal-title" id="myModalLabel">Info</h4>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        
+		      </div>
+		      <div class="modal-body">
+		        Apakah kamu yakin ingin menyimpan data tersebut?
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
+		        <button type="button" class="btn btn-primary toastsDefaultDanger" id="add-pengarang" data-dismiss="modal">Ya, simpan</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
 		<!-- /.content-wrapper -->
 		<footer class="main-footer">
 			<div class="float-right d-none d-sm-block">
@@ -348,7 +372,8 @@ $(function() {
 				data: JSON.stringify(pengarang),
 				dataType: 'json',
 				success : function(hasil) {
-					if (hasil.status == true) {
+					if (hasil.status == 'true') {
+						console.log(hasil);
 						Toast.fire({
 							icon: 'success',
 					        title: 'status : ' + hasil.status + '\nmessage : ' + hasil.message
@@ -365,7 +390,7 @@ $(function() {
 				  alert(err.Message);
 				}
 			});
-			
+			$('#formku')[0].reset();
 		});
 	});
 });

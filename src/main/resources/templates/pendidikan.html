@@ -239,15 +239,15 @@
 					</div>
 					<!-- /.card-header -->
 					<!-- form start -->
-					<div class="card-body">
-								<label for="exampleInputEmail1">ID</label>
+					
+						<div class="card-body">
+						<div class="form-group">
+						<label for="exampleInputEmail1">ID</label>
 								<input
-									type="text" class="form-control" id="id"
-									placeholder="Masukkan ID">
-							</div>
-							
+									type="text" class="form-control" id="id" name="inputid"
+									placeholder="Masukkan ID anda"> </div>
 					<form role="form" id="formku">
-						<div class="card-body"><div class="form-group">
+						<div class="form-group">
 								<label for="religion">Jenjang Pendidikan</label> <select
 									class="form-control" id="jenjang">
 									<option value="sd">Sekolah Dasar</option>
@@ -273,13 +273,14 @@
 									type="text" class="form-control" id="lulus"
 									placeholder="Masukkan tahun lulus">
 							</div>
+							</form>
 						</div>
 						<!-- /.card-body -->
 						<div class="card-footer" align="right">
-							<button type="button" class="btn btn-success swalDefaultSuccess"
+							<button type="button" class="btn btn-primary swalDefaultSuccess"
 								id="tambah">Tambah</button>
 						</div>
-					</form>
+					
 				</div>
 
 				<div class="container-fluid">
@@ -332,9 +333,14 @@
 										</div>
 									</div>
 								</div>
+								<div class="row" >
+								<div class="col-sm-12">
 								<div class="card-footer" align="right">
+									<button type="button" class="btn btn-default"
+									id="hapus">Hapus</button>
 									<button type="button"
-										class="btn btn-danger toastsDefaultDanger" id="hilang">Submit</button>
+										class="btn btn-primary" data-toggle="modal" data-target="#myModal">Simpan</button>
+								</div></div>
 								</div>
 								<!-- /.card-body -->
 							</div>
@@ -346,6 +352,28 @@
 					<!-- /.row -->
 				</div>
 			</section>
+			
+			<!-- Button trigger modal -->
+	
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	      <h4 class="modal-title" id="myModalLabel">Info</h4>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        
+	      </div>
+	      <div class="modal-body">
+	        Apakah kamu yakin ingin menyimpan data tersebut?
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
+	        <button type="button" class="btn btn-primary toastsDefaultDanger" id="hilang" data-dismiss="modal">Ya, simpan</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 			<!-- /.content -->
 		</div>
 		<!-- /.content-wrapper -->
@@ -401,7 +429,7 @@
     $('.swalDefaultSuccess').click(function() {
       Toast.fire({
         type: 'success',
-        title: 'Input Data Success!'
+        title: 'Berhasil input data!'
       })
     });
     $('.swalDefaultInfo').click(function() {
@@ -413,9 +441,9 @@
     $('.toastsDefaultDanger').click(function() {
       $(document).Toasts('create', {
         class: 'bg-success', 
-        title: 'Data Information',
+        title: 'Informasi',
         subtitle: '',
-        body: 'Data Have Been Input Successfully!'
+        body: 'Berhasil menyimpan data!'
       })
     });
   });
@@ -474,7 +502,18 @@ $.ajax({
 		  var err = eval("(" + xhr.responseText + ")");
 		  alert(err.Message);
 		}
+		
 	});
+	$('input[name=inputid').val('');
+	$("#example1 > tbody").empty();
+});
+
+</script>
+
+<script>
+$("#hapus").click(function () {
+	$("#example1 > tbody").empty();
+	$('input[name=inputid').val('');
 });
 
 </script>
