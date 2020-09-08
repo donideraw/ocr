@@ -25,5 +25,14 @@ public class MvcController {
 		return "test";
 	}
 	
+	@GetMapping("/home")
+	public String home() {
+		return "home";
+	}
+	
+	@GetMapping
+	public String login() {
+		return "login";
+	}
 	
 }

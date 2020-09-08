@@ -34,7 +34,7 @@
 				<li class="nav-item"><a class="nav-link" data-widget="pushmenu"
 					href="#" role="button"><i class="fas fa-bars"></i></a></li>
 				<li class="nav-item d-none d-sm-inline-block"><a
-					href="../../index3.html" class="nav-link">Home</a></li>
+					href="/home" class="nav-link">Home</a></li>
 				<li class="nav-item d-none d-sm-inline-block"><a href="#"
 					class="nav-link">Contact</a></li>
 			</ul>
@@ -215,7 +215,7 @@
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="#">Home</a></li>
+								<li class="breadcrumb-item"><a href="/home">Home</a></li>
 								<li class="breadcrumb-item active">Simple Tables</li>
 							</ol>
 						</div>
@@ -240,14 +240,13 @@
 									<div class="row">
 										<div class="col-3">
 											<input type="text" class="form-control" id="nama"
-												placeholder="Masukkan nomor NIK">
+												placeholder="Masukkan nomor NIK anda">
 										</div>
 										<div class="col-3">
 											<button type="button"
 												class="btn btn-primary swalDefaultSuccess" id="cari">Cari</button>
 										</div>
 									</div>
-									<br>
 										<div class="card-body table-responsive">
 									           <table class="table table-striped table-bordered table-hover nowrap" id="tabelku"
 									                  style="width:100%">
@@ -322,10 +321,10 @@
 			            $('#tabelku').DataTable().destroy();
 			        }
 						$.ajax({
+							
 							type : 'GET',
 							url : 'person/'+ $("#nama").val(),
 							success : function(daftarku) {
-								
 								if (daftarku.status == 'true') {
 									Toast.fire({
 									icon : 'success',

@@ -33,7 +33,7 @@
 				<li class="nav-item"><a class="nav-link" data-widget="pushmenu"
 					href="#" role="button"><i class="fas fa-bars"></i></a></li>
 				<li class="nav-item d-none d-sm-inline-block"><a
-					href="../../index3.html" class="nav-link">Home</a></li>
+					href="/home" class="nav-link">Home</a></li>
 				<li class="nav-item d-none d-sm-inline-block"><a href="#"
 					class="nav-link">Contact</a></li>
 			</ul>
@@ -214,11 +214,14 @@
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="#">Home</a></li>
+								<li class="breadcrumb-item"><a href="/home">Home</a></li>
 								<li class="breadcrumb-item active">Simple Tables</li>
 							</ol>
 						</div>
 					</div>
+				</div>
+				<div class="col-lg-3 col-6">
+            <!-- small box -->
 				</div>
 				<!-- /.container-fluid -->
 			</section>
@@ -334,6 +337,20 @@
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	<!-- Optional: include a polyfill for ES6 Promises for IE11 -->
 	<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+	
+	<script>
+	function getJsonForm(jsonArray, isAllowedNull) {
+	    result = {};
+	    jsonArray.forEach(function (element) {
+	        value = element.value;
+	        if (value == "" && isAllowedNull) {
+	            value = null;
+	        }
+	        result[element.name] = value;
+	    });
+	    return result;
+	}
+	</script>
 
 	<script type="text/javascript">
 $(function() {
@@ -344,24 +361,10 @@ $(function() {
     timer: 5000
   });
 	$(function () {
-		//var $daftarbuku = $('.daftar');
-		var $nik = $('#inputnik');
-		var $nama = $('#inputname');
-		var $alamat = $('#inputaddress');
-		var $nohp = $('#inputhp');
-		var $tanggal = $('#inputtgl');
-		var $tempat = $('#inputtempat');
-		
 		$('#add-pengarang').on('click', function() {
-			var pengarang = {
-					nik : $nik.val(),
-					name : $nama.val(),
-					address : $alamat.val(),
-					hp : $nohp.val(),
-					tgl : $tanggal.val(),
-					tempatLahir : $tempat.val(),
-					
-			};
+			
+			var pengarang = getJsonForm($("#formku").serializeArray(), true);
+			console.log(pengarang);
 			$.ajax({
 			   headers: { 
 			        'Accept': 'application/json',

@@ -8,6 +8,14 @@ import com.doni.genbe.model.entity.Pendidikan;
 
 @Repository
 public interface PendidikanRepository extends JpaRepository<Pendidikan, Integer>{
-	@Query(value = "select jenjang from t_pendidikan a inner join t_person b on a.idperson = b.id_person where nik = ? Order by tahunlulus desc limit 1", nativeQuery = true)
+	@Query(value = "select jenjang from t_pendidikan a "
+			+ "inner join t_person b on a.idperson = b.id_person "
+			+ "where nik = ? Order by tahunlulus desc limit 1", nativeQuery = true)
 	String getPendidikanByNik (String nik);
+	
+	@Query(value = "select count(id_pendidikan) from t_pendidikan where jenjang = 's1'", nativeQuery = true)
+	String getJumlahSarjana();
+	
+	@Query(value = "select count(id_pendidikan) from t_pendidikan where jenjang = 's2'", nativeQuery = true)
+	String getJumlahMagister();
 }
