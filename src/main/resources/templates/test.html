@@ -44,7 +44,7 @@
 				<li class="nav-item"><a class="nav-link" data-widget="pushmenu"
 					href="#" role="button"><i class="fas fa-bars"></i></a></li>
 				<li class="nav-item d-none d-sm-inline-block"><a
-					href="../../index3.html" class="nav-link">Home</a></li>
+					href="/home" class="nav-link">Home</a></li>
 				<li class="nav-item d-none d-sm-inline-block"><a href="#"
 					class="nav-link">Contact</a></li>
 			</ul>
@@ -333,8 +333,55 @@
 							</form>
 	      </div>
 	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+	        <button type="button" class="btn btn-primary toastsDefaultDanger" id="tambah" data-dismiss="modal">Tambah</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- Modal Edit -->
+	<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	      <h4 class="modal-title" id="myModalLabel">Edit data pendidikan</h4>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        
+	      </div>
+	      <div class="modal-body">
+	        <form role="form" id="formku2">
+						<div class="form-group">
+								<label for="religion">Jenjang Pendidikan</label> <select
+									class="form-control" id="jenjang2" name="jenjang">
+									<option value="sd">Sekolah Dasar</option>
+									<option value="smp">Sekolah Menengah Pertama</option>
+									<option value="sma">Sekolah Menengah Atas</option>
+									<option value="s1">Sarjana/Diploma</option>
+									<option value="s2">Magister</option>
+									<option value="s3">Doktoral</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="exampleInputEmail1">Nama Institusi</label> <input
+									type="text" class="form-control" id="nama2" name="institusi"
+									placeholder="Masukkan nama institusi">
+							</div>
+							<div class="form-group">
+								<label for="exampleInputPassword1">Tahun Masuk</label> <input
+									type="text" class="form-control" id="masuk2" name="masuk"
+									placeholder="Masukkan tahun masuk">
+							</div>
+							<div class="form-group">
+								<label for="exampleInputPassword1">Tahun Lulus</label> <input
+									type="text" class="form-control" id="lulus2" name="lulus"
+									placeholder="Masukkan tahun lulus">
+							</div>
+							</form>
+	      </div>
+	      <div class="modal-footer">
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
-	        <button type="button" class="btn btn-primary toastsDefaultDanger" id="tambah" data-dismiss="modal">Ya, simpan</button>
+	        <button type="button" class="btn btn-primary toastsDefaultDanger" id="ganti" data-dismiss="modal" >Ya, simpan</button>
 	      </div>
 	    </div>
 	  </div>
@@ -454,40 +501,49 @@
 
 <script>
 var nilai = [];
+var counter = 0;
+var kode = 0;
 $("#tambah").click(function () {
+	
+	
      var b = getJsonForm($("#formku").serializeArray(), true);
+     
+    b.id = counter
+    counter++
     nilai.push(b);
     
+    console.log(nilai)
     
-    if ($.fn.DataTable.isDataTable('#tabelku')) {
-        //table yg sudah dibentuk menjadi datatable harus d rebuild lagi untuk di instantiasi ulang
-        $('#tabelku').DataTable().clear();
-        $('#tabelku').DataTable().destroy(); }
+    buatTabel(nilai)
     
-    $('#tabelku').DataTable({
-	    data: nilai,
-	    "columns": [
-	    	{
-	        	title: "Jenjang Pendidikan",
-	            data: 'jenjang'
-	        },
-	        {
-	            title: "Nama Institusi",
-	            data: 'institusi'
-	        },
-	        {
-	            title: "Tahun Masuk",
-	            data: 'masuk'
-	        },
-	        {
-	            title: "Tahun Lulus",
-	            data: 'lulus'
-	        }
-	        ]
-	  });
+    console.log("masuk tambah");
     
     if ( $("#jenjang").val() != "" && $("#nama").val() != "" && $("#masuk").val() != "" && $("#lulus").val() != "") {
     $('#formku')[0].reset();
+    }
+    
+});
+
+
+function fungsiEdit(id) {
+	kode = id
+	console.log(id)
+	$('#myModal3').modal('show')
+}
+
+	
+	$("#ganti").click(function () {
+		console.log("masuk")
+     var c = getJsonForm($("#formku2").serializeArray(), true);
+     c.id = kode
+    nilai[kode] = c;
+    
+    console.log(nilai)
+    buatTabel(nilai)
+    
+    console.log("masuk edit");
+    if ( $("#jenjang2").val() != "" && $("#nama2").val() != "" && $("#masuk2").val() != "" && $("#lulus2").val() != "") {
+    $('#formku2')[0].reset();
     }
     
 });
@@ -522,6 +578,7 @@ $.ajax({
 			      
 			      $('#tabelku').DataTable().clear();
 			      $('#tabelku').DataTable().destroy();
+			      nilai = [];
 			      
 			} else {
 				$(document).Toasts('create', {
@@ -540,6 +597,46 @@ $.ajax({
 	});
 	
 });
+
+</script>
+
+<script>
+function buatTabel (nilai) {
+	
+	if ($.fn.DataTable.isDataTable('#tabelku')) {
+        //table yg sudah dibentuk menjadi datatable harus d rebuild lagi untuk di instantiasi ulang
+        $('#tabelku').DataTable().clear();
+        $('#tabelku').DataTable().destroy(); }
+	
+	$('#tabelku').DataTable({
+	    data: nilai,
+	    "columns": [
+	    	{
+	        	title: "Jenjang Pendidikan",
+	            data: 'jenjang'
+	        },
+	        {
+	            title: "Nama Institusi",
+	            data: 'institusi'
+	        },
+	        {
+	            title: "Tahun Masuk",
+	            data: 'masuk'
+	        },
+	        {
+	            title: "Tahun Lulus",
+	            data: 'lulus'
+	        },
+	        {
+                title: "Action",
+                data: null,
+                render: function (data, type, row) {
+                    return "<button class='btn-primary' onclick=fungsiEdit('" + data.id + "') >Edit Data</button>"
+                }
+            }
+	        ]
+	  });
+}
 
 </script>
 
