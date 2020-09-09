@@ -429,7 +429,7 @@
 
 	<!-- jQuery -->
 	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-
+	
 	<script src="../../plugins/jquery/jquery.min.js"></script>
 	<!-- Bootstrap 4 -->
 	<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -445,7 +445,7 @@
 	<script src="sweetalert2.all.min.js"></script>
 	<!-- Optional: include a polyfill for ES6 Promises for IE11 -->
 	<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.1/parsley.min.js"></script>
 	<script
 		src="../../plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 	<!-- AdminLTE App -->
@@ -504,7 +504,7 @@ var nilai = [];
 var counter = 0;
 var kode = 0;
 $("#tambah").click(function () {
-	
+	if ($('#form-biodata').parsley().validate()) {
 	
      var b = getJsonForm($("#formku").serializeArray(), true);
      
@@ -518,10 +518,8 @@ $("#tambah").click(function () {
     
     console.log("masuk tambah");
     
-    if ( $("#jenjang").val() != "" && $("#nama").val() != "" && $("#masuk").val() != "" && $("#lulus").val() != "") {
     $('#formku')[0].reset();
-    }
-    
+	}
 });
 
 
@@ -529,6 +527,12 @@ function fungsiEdit(id) {
 	kode = id
 	console.log(id)
 	$('#myModal3').modal('show')
+	json = nilai[id]
+	console.log(json.institusi)
+	document.getElementById("nama2").value = json.institusi;
+	document.getElementById("jenjang2").value = json.jenjang;
+	document.getElementById("masuk2").value = json.masuk;
+	document.getElementById("lulus2").value = json.lulus;
 }
 
 	
@@ -542,9 +546,7 @@ function fungsiEdit(id) {
     buatTabel(nilai)
     
     console.log("masuk edit");
-    if ( $("#jenjang2").val() != "" && $("#nama2").val() != "" && $("#masuk2").val() != "" && $("#lulus2").val() != "") {
     $('#formku2')[0].reset();
-    }
     
 });
 
@@ -579,6 +581,7 @@ $.ajax({
 			      $('#tabelku').DataTable().clear();
 			      $('#tabelku').DataTable().destroy();
 			      nilai = [];
+			      counter = 0;
 			      
 			} else {
 				$(document).Toasts('create', {
@@ -646,6 +649,8 @@ $("#hapus").click(function () {
     $('#tabelku').DataTable().destroy();
 	$('input[name=inputid]').val('');
 	$('#formku')[0].reset();
+	nilai = [];
+	counter = 0;
 });
 
 </script>

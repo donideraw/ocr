@@ -505,7 +505,6 @@ var counter = 0;
 var kode = 0;
 $("#tambah").click(function () {
 	
-	
      var b = getJsonForm($("#formku").serializeArray(), true);
      
     b.id = counter
@@ -518,9 +517,7 @@ $("#tambah").click(function () {
     
     console.log("masuk tambah");
     
-    if ( $("#jenjang").val() != "" && $("#nama").val() != "" && $("#masuk").val() != "" && $("#lulus").val() != "") {
     $('#formku')[0].reset();
-    }
     
 });
 
@@ -529,6 +526,12 @@ function fungsiEdit(id) {
 	kode = id
 	console.log(id)
 	$('#myModal3').modal('show')
+	json = nilai[id]
+	console.log(json.institusi)
+	document.getElementById("nama2").value = json.institusi;
+	document.getElementById("jenjang2").value = json.jenjang;
+	document.getElementById("masuk2").value = json.masuk;
+	document.getElementById("lulus2").value = json.lulus;
 }
 
 	
@@ -542,9 +545,7 @@ function fungsiEdit(id) {
     buatTabel(nilai)
     
     console.log("masuk edit");
-    if ( $("#jenjang2").val() != "" && $("#nama2").val() != "" && $("#masuk2").val() != "" && $("#lulus2").val() != "") {
     $('#formku2')[0].reset();
-    }
     
 });
 
@@ -579,6 +580,7 @@ $.ajax({
 			      $('#tabelku').DataTable().clear();
 			      $('#tabelku').DataTable().destroy();
 			      nilai = [];
+			      counter = 0;
 			      
 			} else {
 				$(document).Toasts('create', {
@@ -646,6 +648,8 @@ $("#hapus").click(function () {
     $('#tabelku').DataTable().destroy();
 	$('input[name=inputid]').val('');
 	$('#formku')[0].reset();
+	nilai = [];
+	counter = 0;
 });
 
 </script>

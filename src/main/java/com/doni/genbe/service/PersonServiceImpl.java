@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.doni.genbe.model.dto.AllDto;
 import com.doni.genbe.model.dto.PendidikanDto;
 import com.doni.genbe.model.dto.PersonDto;
 import com.doni.genbe.model.entity.Biodata;
@@ -32,7 +33,7 @@ public class PersonServiceImpl implements PersonService {
 	public void insertPendidikan(List<PendidikanDto> dtoList, Integer idperson) {
 		for (int i = 0; i<dtoList.size(); i++) {
 			Pendidikan didik = convertToEntity(dtoList.get(i));
-			if (didik.getJenjang() == "" || didik.getInstitusi() == "" || didik.getTahunMasuk() == "" || didik.getTahunLulus() == "") {
+			if (didik.getJenjang() == null || didik.getInstitusi() == null || didik.getTahunMasuk() == null || didik.getTahunLulus() == null) {
 				Integer.parseInt("saya");
 				}
 			didik.setPerson(personRepository.findById(idperson).get());
@@ -63,7 +64,15 @@ public class PersonServiceImpl implements PersonService {
 	}
 	
 	@Override
-	public void insertBiodata(Biodata biodata) {
+	public void insertBiodata(Person person, AllDto dto) {
+		personRepository.save(person);
+		person = personRepository.findById(dto.getKodePerson()).get();
+		Biodata biodata = new Biodata();
+		biodata.setNomorHandphone(dto.getHp());
+		biodata.setTanggalLahir(dto.getTgl());
+		biodata.setTempatLahir(dto.getTempatLahir());
+		biodata.setKodeBiodata(dto.getKodeBiodata());
+		biodata.setPerson(person);
 		biodataRepo.save(biodata);
 	}
 }

@@ -35,4 +35,9 @@ public class MvcController {
 		return "login";
 	}
 	
+	@GetMapping("/edit")
+	public String edit() {
+		return "edit";
+	}
+	
 }
