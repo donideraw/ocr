@@ -16,7 +16,48 @@
 <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.css">
 <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 <!-- Theme style -->
+<link rel="stylesheet" href="../../dist/css/adminlte.css">
 <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+<!-- Parsley -->
+<style>
+        input.parsley-success,
+        select.parsley-success,
+        textarea.parsley-success {
+            color: #468847;
+            background-color: #DFF0D8;
+            border: 1px solid #D6E9C6;
+        }
+
+
+        input.parsley-error,
+        select.parsley-error,
+        textarea.parsley-error {
+            color: #B94A48;
+            background-color: #F2DEDE;
+            border: 1px solid #EED3D7;
+        }
+
+        .parsley-errors-list {
+            margin: 2px 0 3px;
+            padding: 0;
+            list-style-type: none;
+            font-size: 0.9em;
+            line-height: 0.9em;
+            opacity: 0;
+            color: #B94A48;
+
+            transition: all .3s ease-in;
+            -o-transition: all .3s ease-in;
+            -moz-transition: all .3s ease-in;
+            -webkit-transition: all .3s ease-in;
+        }
+
+        .parsley-errors-list.filled {
+            opacity: 1;
+        }
+    </style>
+<!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/parsley.css"> -->
 <!-- Google Font: Source Sans Pro -->
 <link
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
@@ -285,35 +326,35 @@
 
 								<div class="form-group">
 									<label for="exampleInputEmail1">NIK</label> <input type="text"
-										class="form-control" id="inputnik" name="nik"
+										class="form-control" id="inputnik" name="nik" required data-parsley-length="[16,16]"
 										placeholder="Masukkan nomor NIK anda">
 								</div>
 								<div class="form-group">
 									<label for="exampleInputPassword1">Nama Lengkap</label> <input
-										type="text" class="form-control" id="inputname" name="name"
+										type="text" class="form-control" id="inputname" name="name" required
 										placeholder="Masukkan nama lengkap anda">
 								</div>
 								<div class="form-group">
 									<label for="exampleInputPassword1">Alamat</label> <input
 										type="text" class="form-control" id="inputaddress"
-										name="address" placeholder="Masukkan alamat anda">
+										name="address" required placeholder="Masukkan alamat anda">
 								</div>
 							</div>
 							<div class="col-sm">
 								<div class="form-group">
 									<label for="exampleInputEmail1">No Handphone</label> <input
-										type="text" class="form-control" id="inputhp" name="hp"
+										type="text" class="form-control" id="inputhp" name="hp" required
 										placeholder="Masukkan nomor handphone anda">
 								</div>
 								<div class="form-group">
 									<label for="exampleInputPassword1">Tanggal lahir</label> <input
-										type="date" class="form-control" id="inputtgl" name="tgl"
+										type="date" class="form-control" id="inputtgl" name="tgl" required
 										placeholder="Masukkan tanggal lahir anda">
 								</div>
 								<div class="form-group">
 									<label for="exampleInputPassword1">Tempat Lahir</label> <input
 										type="text" class="form-control" id="inputtempat"
-										name="tempatLahir" placeholder="Masukkan tempat lahir anda">
+										name="tempatLahir" required placeholder="Masukkan tempat lahir anda" >
 								</div>
 							</div>
 						</div>
@@ -321,7 +362,7 @@
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
-	        <button type="button" class="btn btn-primary toastsDefaultDanger" id="ganti" data-dismiss="modal" >Ya, simpan</button>
+	        <button type="button" class="btn btn-primary toastsDefaultDanger" id="ganti" >Ya, simpan</button>
 	      </div>
 	    </div>
 	  </div>
@@ -330,6 +371,8 @@
 	<!-- jQuery -->
 	<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 	<script src="../../plugins/jquery/jquery.min.js"></script>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.1/parsley.min.js"></script> -->
+	<script src="../../js/parsley.js"></script>
 	<!-- Bootstrap 4 -->
 	<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- DataTables -->
@@ -340,6 +383,7 @@
 	<!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 	<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script> -->
 	<!-- AdminLTE App -->
+	
 	<script src="../../dist/js/adminlte.min.js"></script>
 	
 	<!-- AdminLTE for demo purposes -->
@@ -349,7 +393,14 @@
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	<!-- Optional: include a polyfill for ES6 Promises for IE11 -->
 	<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
-
+	<!-- Parsley -->
+	<!-- <script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/parsley.js"></script> -->
+	
+	<!-- <script type="text/javascript">
+    $('#formku2').parsley();
+	</script> -->
 
 	<script>
 	var dataku = []
@@ -396,10 +447,10 @@
 								            data: 'tempatLahir'
 								        },
 								        {
-							                title: "Action",
+							                title: "Edit",
 							                data: null,
 							                render: function (data, type, full, doni) {
-							                    return "<button class='btn-primary' onclick=fungsiEdit('" + doni.row + "')>Edit Data</button>"
+							                    return "<button class='btn-gold' onclick=fungsiEdit('" + doni.row + "')>Edit Data</button>"
 							                }
 							            }
 								        ]
@@ -427,7 +478,9 @@
 	function simpanForm(json) {
 		
 		$("#ganti").click(function () {
-	
+		
+		if ($('#formku2').parsley().validate()) {	
+		
 		json.nik = $('#inputnik').val();
 		json.name = $('#inputname').val();
 		json.address = $('#inputaddress').val();
@@ -467,7 +520,7 @@
 							        title: 'status : ' + hasil.status + '\nmessage : ' + hasil.message
 							      })
 							}
-							location.reload(true);
+							 location.reload(true);
 						},
 						error: function(xhr, status, error) {
 						  var err = eval("(" + xhr.responseText + ")");
@@ -476,6 +529,7 @@
 					});
 				});
 			});
+		}
 		});
 	}
 	

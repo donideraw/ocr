@@ -12,6 +12,7 @@
  */
 :root {
   --blue: #007bff;
+  --gold: #FF8C00;
   --indigo: #6610f2;
   --purple: #6f42c1;
   --pink: #e83e8c;
@@ -2578,6 +2579,13 @@ fieldset:disabled a.btn {
   color: #ffffff;
   background-color: #007bff;
   border-color: #007bff;
+  box-shadow: none;
+}
+
+.btn-gold {
+  color: #ffffff;
+  background-color: #ffd700;
+  border-color: #ffffff;
   box-shadow: none;
 }
 
