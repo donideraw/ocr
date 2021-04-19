@@ -10,7 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>AdminLTE 3 | Starter</title>
+  <title>Aplikasi OCR</title>
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
@@ -183,14 +183,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									class="nav-link"> <i class="far fa-circle nav-icon"></i>
 										<p>Form Biodata</p>
 								</a></li>
-								<li class="nav-item"><a href="/formpendidikan"
-									class="nav-link"> <i class="far fa-circle nav-icon"></i>
-										<p>Form Pendidikan</p>
-								</a></li>
-								<li class="nav-item"><a href="/tabelbiodata"
-									class="nav-link"> <i class="far fa-circle nav-icon"></i>
-										<p>Tabel Biodata</p>
-								</a></li>
+<!--								<li class="nav-item"><a href="/formpendidikan"-->
+<!--									class="nav-link"> <i class="far fa-circle nav-icon"></i>-->
+<!--										<p>Form Pendidikan</p>-->
+<!--								</a></li>-->
+<!--								<li class="nav-item"><a href="/tabelbiodata"-->
+<!--									class="nav-link"> <i class="far fa-circle nav-icon"></i>-->
+<!--										<p>Tabel Biodata</p>-->
+<!--								</a></li>-->
 							</ul></li>
 					</ul>
 				</nav>
@@ -206,13 +206,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Selamat Datang di Aplikasi Genbe</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Starter Page</li>
-            </ol>
+            <h1 class="m-0 text-dark">Selamat Datang di Aplikasi OCR</h1>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -222,141 +216,45 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
-        <!-- widgets -->
-        
-        	<div class = "row">
-        		<div class = "col-sm-4">
-					<div class="small-box bg-primary">
-						<div class="inner">
-							<h3 id="jumlahorang">44</h3>
-							<p>Pengguna Terdaftar</p>
-						</div>
-						<div class="icon">
-							<i class="ion ion-person-add"></i>
-							</div>
-							<a href="/edit" class="small-box-footer">More info <i
-								class="fas fa-arrow-circle-right"></i></a>
-					</div>
-				</div>
-				<div class = "col-sm-4">
-					<div class="small-box bg-fuchsia">
-						<div class="inner">
-							<h3 id="jumlahsarjana">44</h3>
-							<p>Pengguna Sarjana</p>
-						</div>
-						<div class="icon">
-							<i class="ion ion-person-add"></i>
-							</div>
-							<a href="#" class="small-box-footer">More info <i
-								class="fas fa-arrow-circle-right"></i></a>
-					</div>
-				</div>
-				<div class = "col-sm-4">
-					<div class="small-box bg-orange">
-						<div class="inner">
-							<h3 id = "jumlahmagister">44</h3>
-							<p>Pengguna Magister</p>
-						</div>
-						<div class="icon">
-							<i class="ion ion-person-add"></i>
-							</div>
-							<a href="#" class="small-box-footer">More info <i
-								class="fas fa-arrow-circle-right"></i></a>
-					</div>
-				</div>			
-			</div>
-				<div class="card bg-navy">
-					<div class="card-header">
-						<h3 class="card-title">Pendaftar Terbaru</h3>
-							<div class="card-tools">
-							<button type="button" class="btn btn-tool"
-								data-card-widget="collapse">
-								<i class="fas fa-minus"></i>
-							</button>
-						</div>
-						<!-- /.card-tools -->
-					</div>
-					<!-- /.card-header -->
-					<div class="card-body" id="namaterakhir">The body of the card</div>
-					<!-- /.card-body -->
-				</div>
-				<div class = "row">
-				<div class="col-sm-7">
-					<div class="card">
-							<div class="card-header bg-primary">
-								<h3 class="card-title">Apa yang ingin kamu lakukan?</h3>
-							</div>
-							<div class="card-body" align="center">
-								<a class="btn btn-app" href="/formbiodata"> <i
-									class="fas fa-edit"></i> Tambah Biodata
-								</a> <a class="btn btn-app" href="/tabelbiodata"> <i
-									class="fas fa-search"></i> Cari Biodata
-								</a> <a class="btn btn-app" href="/formpendidikan"> <i
-									class="fas fa-edit"></i> Tambah Pendidikan
-								</a>
-							</div>
-							<!-- /.card-body -->
-						</div>
-				
-				<div class="card">
-				<div class="position-relative p-3 bg-white" style="height: 180px">
-                      <div class="ribbon-wrapper">
-                        <div class="ribbon bg-primary">
-                          Credit
-                        </div>
+
+              <div class="card card-primary">
+                  <div class="card-header">
+                      <h3 class="card-title">Scan Dokumen</h3>
+                  </div>
+                  <br>
+                  <div class="card-body table-responsive">
+                      <div class="row mb-12">
+                          <div class="col-4" align="left">
+                              <form id="file-upload-form">
+                                  <label for="file-upload-input">Pilih file untuk di upload</label>
+                                  <input type="file" id="file-upload-input" name="file">
+                                  <button type="submit" class="btn btn-primary">Upload</button>
+                              </form>
+<!--                              <p id="f1_upload_process">Loading...<br/><img src="loader.gif" /></p>-->
+<!--                              <p id="result"></p>-->
+<!--                              <form action="upload.php" method="post" enctype="multipart/form-data" target="upload_target" onsubmit="startUpload();" >-->
+<!--                                  File: <input name="myfile" type="file" />-->
+<!--                                  <input type="submit" name="submitBtn" value="Upload" />-->
+<!--                              </form>-->
+
+<!--                              <iframe id="upload_target" name="upload_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>-->
+                          </div>
+                          <div class="col-8" align="center">
+                              <button type="button"
+                                      class="btn btn-primary" id="proses">Proses</button>
+                          </div>
                       </div>
-                      Terima kasih telah menggunakan aplikasi Genbe <br><br>
-                      <small>Aplikasi ini dibuat untuk menyelesaikan
-                      		ujian frontend PT Pro Sigmaka Mandiri <br>
-                      		Terima kasih sebesar-besarnya kami ucapkan
-                      		kepada kak Akbar yang senantiasa <br> membimbing kami 
-                      		dalam menyelesaikan program bootcamp ini.</small>
-                    </div>
-                </div>
-				</div>
-				<div class = "col-sm-5">
-				<div class="card bg-success">
-	              <div class="card-header border-0 ui-sortable-handle" style="cursor: move;">
-	
-	                <h3 class="card-title">
-	                  <i class="far fa-calendar-alt"></i>
-	                  Calendar
-	                </h3>
-	                <!-- tools card -->
-	                <div class="card-tools">
-	                  <!-- button with a dropdown -->
-	                  <div class="btn-group">
-	                    <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
-	                      <i class="fas fa-bars"></i></button>
-	                    <div class="dropdown-menu float-right" role="menu">
-	                      <a href="#" class="dropdown-item">Add new event</a>
-	                      <a href="#" class="dropdown-item">Clear events</a>
-	                      <div class="dropdown-divider"></div>
-	                      <a href="#" class="dropdown-item">View calendar</a>
-	                    </div>
-	                  </div>
-	                  <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
-	                    <i class="fas fa-minus"></i>
-	                  </button>
-	                  <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">
-	                    <i class="fas fa-times"></i>
-	                  </button>
-	                </div>
-	                <!-- /. tools -->
-	              </div>
-              <!-- /.card-header -->
-              <div class="card-body pt-0">
-                <!--The calendar -->
-                <div id="calendar" style="width: 100%"><div class="bootstrap-datetimepicker-widget usetwentyfour"><ul class="list-unstyled"><li class="show"><div class="datepicker"><div class="datepicker-days" style=""><table class="table table-sm"><thead><tr><th class="prev" data-action="previous"><span class="fa fa-chevron-left" title="Previous Month"></span></th><th class="picker-switch" data-action="pickerSwitch" colspan="5" title="Select Month">September 2020</th><th class="next" data-action="next"><span class="fa fa-chevron-right" title="Next Month"></span></th></tr><tr><th class="dow">Su</th><th class="dow">Mo</th><th class="dow">Tu</th><th class="dow">We</th><th class="dow">Th</th><th class="dow">Fr</th><th class="dow">Sa</th></tr></thead><tbody><tr><td data-action="selectDay" data-day="08/30/2020" class="day old weekend">30</td><td data-action="selectDay" data-day="08/31/2020" class="day old">31</td><td data-action="selectDay" data-day="09/01/2020" class="day">1</td><td data-action="selectDay" data-day="09/02/2020" class="day">2</td><td data-action="selectDay" data-day="09/03/2020" class="day">3</td><td data-action="selectDay" data-day="09/04/2020" class="day">4</td><td data-action="selectDay" data-day="09/05/2020" class="day weekend">5</td></tr><tr><td data-action="selectDay" data-day="09/06/2020" class="day weekend">6</td><td data-action="selectDay" data-day="09/07/2020" class="day">7</td><td data-action="selectDay" data-day="09/08/2020" class="day">8</td><td data-action="selectDay" data-day="09/09/2020" class="day active today">9</td><td data-action="selectDay" data-day="09/10/2020" class="day">10</td><td data-action="selectDay" data-day="09/11/2020" class="day">11</td><td data-action="selectDay" data-day="09/12/2020" class="day weekend">12</td></tr><tr><td data-action="selectDay" data-day="09/13/2020" class="day weekend">13</td><td data-action="selectDay" data-day="09/14/2020" class="day">14</td><td data-action="selectDay" data-day="09/15/2020" class="day">15</td><td data-action="selectDay" data-day="09/16/2020" class="day">16</td><td data-action="selectDay" data-day="09/17/2020" class="day">17</td><td data-action="selectDay" data-day="09/18/2020" class="day">18</td><td data-action="selectDay" data-day="09/19/2020" class="day weekend">19</td></tr><tr><td data-action="selectDay" data-day="09/20/2020" class="day weekend">20</td><td data-action="selectDay" data-day="09/21/2020" class="day">21</td><td data-action="selectDay" data-day="09/22/2020" class="day">22</td><td data-action="selectDay" data-day="09/23/2020" class="day">23</td><td data-action="selectDay" data-day="09/24/2020" class="day">24</td><td data-action="selectDay" data-day="09/25/2020" class="day">25</td><td data-action="selectDay" data-day="09/26/2020" class="day weekend">26</td></tr><tr><td data-action="selectDay" data-day="09/27/2020" class="day weekend">27</td><td data-action="selectDay" data-day="09/28/2020" class="day">28</td><td data-action="selectDay" data-day="09/29/2020" class="day">29</td><td data-action="selectDay" data-day="09/30/2020" class="day">30</td><td data-action="selectDay" data-day="10/01/2020" class="day new">1</td><td data-action="selectDay" data-day="10/02/2020" class="day new">2</td><td data-action="selectDay" data-day="10/03/2020" class="day new weekend">3</td></tr><tr><td data-action="selectDay" data-day="10/04/2020" class="day new weekend">4</td><td data-action="selectDay" data-day="10/05/2020" class="day new">5</td><td data-action="selectDay" data-day="10/06/2020" class="day new">6</td><td data-action="selectDay" data-day="10/07/2020" class="day new">7</td><td data-action="selectDay" data-day="10/08/2020" class="day new">8</td><td data-action="selectDay" data-day="10/09/2020" class="day new">9</td><td data-action="selectDay" data-day="10/10/2020" class="day new weekend">10</td></tr></tbody></table></div><div class="datepicker-months" style="display: none;"><table class="table-condensed"><thead><tr><th class="prev" data-action="previous"><span class="fa fa-chevron-left" title="Previous Year"></span></th><th class="picker-switch" data-action="pickerSwitch" colspan="5" title="Select Year">2020</th><th class="next" data-action="next"><span class="fa fa-chevron-right" title="Next Year"></span></th></tr></thead><tbody><tr><td colspan="7"><span data-action="selectMonth" class="month">Jan</span><span data-action="selectMonth" class="month">Feb</span><span data-action="selectMonth" class="month">Mar</span><span data-action="selectMonth" class="month">Apr</span><span data-action="selectMonth" class="month">May</span><span data-action="selectMonth" class="month">Jun</span><span data-action="selectMonth" class="month">Jul</span><span data-action="selectMonth" class="month">Aug</span><span data-action="selectMonth" class="month active">Sep</span><span data-action="selectMonth" class="month">Oct</span><span data-action="selectMonth" class="month">Nov</span><span data-action="selectMonth" class="month">Dec</span></td></tr></tbody></table></div><div class="datepicker-years" style="display: none;"><table class="table-condensed"><thead><tr><th class="prev" data-action="previous"><span class="fa fa-chevron-left" title="Previous Decade"></span></th><th class="picker-switch" data-action="pickerSwitch" colspan="5" title="Select Decade">2020-2029</th><th class="next" data-action="next"><span class="fa fa-chevron-right" title="Next Decade"></span></th></tr></thead><tbody><tr><td colspan="7"><span data-action="selectYear" class="year old">2019</span><span data-action="selectYear" class="year active">2020</span><span data-action="selectYear" class="year">2021</span><span data-action="selectYear" class="year">2022</span><span data-action="selectYear" class="year">2023</span><span data-action="selectYear" class="year">2024</span><span data-action="selectYear" class="year">2025</span><span data-action="selectYear" class="year">2026</span><span data-action="selectYear" class="year">2027</span><span data-action="selectYear" class="year">2028</span><span data-action="selectYear" class="year">2029</span><span data-action="selectYear" class="year old">2030</span></td></tr></tbody></table></div><div class="datepicker-decades" style="display: none;"><table class="table-condensed"><thead><tr><th class="prev" data-action="previous"><span class="fa fa-chevron-left" title="Previous Century"></span></th><th class="picker-switch" data-action="pickerSwitch" colspan="5">2000-2090</th><th class="next" data-action="next"><span class="fa fa-chevron-right" title="Next Century"></span></th></tr></thead><tbody><tr><td colspan="7"><span data-action="selectDecade" class="decade old" data-selection="2006">1990</span><span data-action="selectDecade" class="decade" data-selection="2006">2000</span><span data-action="selectDecade" class="decade active" data-selection="2016">2010</span><span data-action="selectDecade" class="decade" data-selection="2026">2020</span><span data-action="selectDecade" class="decade" data-selection="2036">2030</span><span data-action="selectDecade" class="decade" data-selection="2046">2040</span><span data-action="selectDecade" class="decade" data-selection="2056">2050</span><span data-action="selectDecade" class="decade" data-selection="2066">2060</span><span data-action="selectDecade" class="decade" data-selection="2076">2070</span><span data-action="selectDecade" class="decade" data-selection="2086">2080</span><span data-action="selectDecade" class="decade" data-selection="2096">2090</span><span data-action="selectDecade" class="decade old" data-selection="2106">2100</span></td></tr></tbody></table></div></div></li><li class="picker-switch accordion-toggle"></li></ul></div></div>
+                      <br>
+                      <table class="table table-striped table-bordered table-hover" id="tabelmu"
+                             style="width:100%">
+                      </table>
+                      <br>
+                      <table class="table table-striped table-bordered table-hover" id="tabelku"
+                             style="width:100%">
+                      </table>
+                  </div>
               </div>
-              <!-- /.card-body -->
-            </div>
-				
-				</div>
-				
-				</div>
-					<!-- /.widgets -->
-        <!-- /.row -->
+
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
@@ -382,6 +280,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Default to the left -->
     <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
   </footer>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Info</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                </div>
+                <div class="modal-body">
+                    <h3 id="jumlahorang">Data tidak ditemukan</h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <!-- ./wrapper -->
 
@@ -393,18 +311,150 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
+<!-- DataTables -->
+<script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+<script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.js"></script>
+
+    <script>
+        $("#proses").click(function() {
+            $.ajax({
+                type: 'GET',
+                url: '/scan',
+                success: function () {
+                    console.log("test");
+                    window.location.reload();
+                }
+            });
+        })
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // bind form submit event
+            $("#file-upload-form").on("submit", function (e) {
+
+                // cancel the default behavior
+                e.preventDefault();
+
+                // use $.ajax() to upload file
+                $.ajax({
+                    url: "/upload",
+                    type: "POST",
+                    data: new FormData(this),
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    success: function () {
+                        if ($.fn.DataTable.isDataTable('#tabelmu')) {
+                            //table yg sudah dibentuk menjadi datatable harus d rebuild lagi untuk di instantiasi ulang
+                            $('#tabelmu').DataTable().clear();
+                            $('#tabelmu').DataTable().destroy();
+                        }
+                        $.ajax({
+                            type: 'GET',
+                            url: '/false',
+                            success: function (datatable) {
+                                $('#tabelmu').DataTable({
+                                    data: datatable,
+                                    "columns": [
+                                        {
+                                            title: "Nama File",
+                                            data: 'docName'
+                                        }
+                                    ]
+                                });
+                            }
+                        });
+                    },
+                    error: function (err) {
+                        console.error(err);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        function lihatData(id) {
+            $('#myModal').modal('show');
+            $.ajax({
+                type: 'GET',
+                url: '/get/' + id,
+                success: function (hasil) {
+                    if (hasil.length > 0) {
+                        $('#jumlahorang').html(hasil);
+                    } else {
+                        $('#jumlahorang').html("Hasil tidak ditemukan");
+                    }
+                }
+            });
+        }
+    </script>
+
+    <script>
+        function fixData(id) {
+            $('#myModal').modal('show');
+            $.ajax({
+                type: 'GET',
+                url: '/fix/' + id,
+                success: function (hasil) {
+                    if (hasil.length > 0) {
+                        $('#jumlahorang').html(hasil);
+                    } else {
+                        $('#jumlahorang').html("Hasil tidak ditemukan");
+                    }
+                }
+            });
+        }
+    </script>
 
 	<script>
-	$.ajax({
-		type : 'GET',
-		url : '/widgets',
-		success : function(nilai) {
-		$('#jumlahorang').html(nilai.jumlahPerson);
-		$('#jumlahsarjana').html(nilai.jumlahSarjana);
-		$('#jumlahmagister').html(nilai.jumlahMagister);
-		$('#namaterakhir').html(nilai.namaTerakhir);
-		}
-	});
+            if ($.fn.DataTable.isDataTable('#tabelku')) {
+                //table yg sudah dibentuk menjadi datatable harus d rebuild lagi untuk di instantiasi ulang
+                $('#tabelku').DataTable().clear();
+                $('#tabelku').DataTable().destroy();
+            }
+            $.ajax({
+                type: 'GET',
+                url: '/get',
+                success: function (datatable) {
+                    $('#tabelku').DataTable({
+                        data: datatable,
+                        "columns": [
+                            // {
+                            //     title: "No",
+                            //     data: 'id'
+                            // },
+                            {
+                                title: "Nama File",
+                                data: 'docName'
+                            },
+                            {
+                                title: "Status",
+                                data: 'success',
+                                render: function (data, type, row) {
+                                    if (data == "SUCCEED") {
+                                        return "<button class='btn-success' disabled>SUKSES</button>"
+                                    } else {
+                                        return "<button class='btn-danger' disabled>GAGAL</button>"
+                                    }
+                                }
+                            },
+                            {
+                                title: "Action",
+                                data: null,
+                                render: function (data, type, row) {
+                                    return "<button class='btn-primary' onclick=lihatData('" + data.id + "') >Lihat Data</button>" +
+                                        "<button class='btn-default' onclick=fixData('" + data.id + "') >Perhalus Data</button>"
+                                }
+                            }
+                        ]
+                    });
+                }
+            });
 	</script>
 
 </body>

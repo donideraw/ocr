@@ -9,35 +9,15 @@ public class MvcController {
 	public String getData() {
 		return "table";
 	}
-	
-	@GetMapping("/formbiodata")
-	public String insertBiodata() {
-		return "biodata";
-	}
-	
+
 	@GetMapping("/formpendidikan")
 	public String insertPendidikan() {
 		return "pendidikan";
 	}
 	
-	@GetMapping("/cobacoba")
-	public String latihan() {
-		return "test";
-	}
-	
 	@GetMapping("/home")
 	public String home() {
 		return "home";
-	}
-	
-	@GetMapping
-	public String login() {
-		return "login";
-	}
-	
-	@GetMapping("/edit")
-	public String edit() {
-		return "edit";
 	}
 	
 }

@@ -323,58 +323,22 @@
 						$.ajax({
 							
 							type : 'GET',
-							url : 'person/'+ $("#nama").val(),
+							url : 'get',
 							success : function(daftarku) {
-								if (daftarku.status == 'true') {
-									Toast.fire({
-									icon : 'success',
-									title : 'status : '+ daftarku.status+ '\nmessage : '+ daftarku.message})
 									console.log(daftarku);
 									$('#tabelku').DataTable({
 									    data: [daftarku.data],
 									    "columns": [
 									    	{
 									        	title: "NIK",
-									            data: 'nik'
+									            data: 'id'
 									        },
 									        {
 									            title: "Nama Lengkap",
-									            data: 'name'
-									        },
-									        {
-									            title: "Alamat",
-									            data: 'address'
-									        },
-									        {
-									            title: "No Handphone",
-									            data: 'hp'
-									        },
-									        {
-									        	title: "Tanggal Lahir",
-									            data: 'tgl'
-									        },
-									        {
-									            title: "Tempat Lahir",
-									            data: 'tempatLahir'
-									        },
-									        {
-									        	title: "Pendidikan Terakhir",
-									            data: 'pendidikan_terakhir'
-									        },
-									        {
-									            title: "Umur",
-									            data: 'umur'
+									            data: 'docName'
 									        }
 									        ]
 									  });
-									
-								} else {
-									Toast.fire({
-									icon : 'error',
-									title : 'status : '+ daftarku.status+ '\nmessage : '+ daftarku.message
-									})
-								}
-							}
 
 						});
 					});
