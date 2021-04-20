@@ -110,5 +110,9 @@ public class OcrService {
         return repository.findById(id).orElse(null).getResult();
     }
 
+    public Document getDocument(Long id) {
+        return repository.findById(id).orElse(null);
+    }
+
 
 }

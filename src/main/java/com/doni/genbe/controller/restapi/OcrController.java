@@ -41,6 +41,11 @@ public class OcrController {
         return ResponseEntity.ok(service.getOne(id));
     }
 
+    @GetMapping("/doc/{id}")
+    public ResponseEntity<?> getDocument(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getDocument(id));
+    }
+
     @GetMapping("/fix/{id}")
     public ResponseEntity<?> fix(@PathVariable Long id) {
         return ResponseEntity.ok(service.fixString(id));

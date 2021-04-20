@@ -223,10 +223,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </div>
                   <br>
                   <div class="card-body table-responsive">
-                      <div class="row mb-12">
-                          <div class="col-4" align="left">
+
+                          <div class="col-12" align="left">
                               <form id="file-upload-form">
-                                  <label for="file-upload-input">Pilih file untuk di upload</label>
+                                  <label for="file-upload-input">Pilih file untuk di upload</label> <br>
                                   <input type="file" id="file-upload-input" name="file">
                                   <button type="submit" class="btn btn-primary">Upload</button>
                               </form>
@@ -239,11 +239,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <!--                              <iframe id="upload_target" name="upload_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>-->
                           </div>
-                          <div class="col-8" align="center">
+                          <div class="col-12" align="right">
                               <button type="button"
                                       class="btn btn-primary" id="proses">Proses</button>
                           </div>
-                      </div>
+
                       <br>
                       <table class="table table-striped table-bordered table-hover" id="tabelmu"
                              style="width:100%">
@@ -316,9 +316,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 <script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script>
         $("#proses").click(function() {
+
             $.ajax({
                 type: 'GET',
                 url: '/scan',
@@ -326,6 +328,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     console.log("test");
                     window.location.reload();
                 }
+            });
+
+            swal({
+                title: "Loading...",
+                text: "Please wait...",
+                type: "success",
+                buttons: false,
+                closeOnClickOutside: false,
+                timer: 200000
             });
         })
     </script>
@@ -348,6 +359,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     contentType: false,
                     cache: false,
                     success: function () {
+                        swal({
+                                title: "Uploaded!",
+                                text: "File berhasil diupload",
+                                type: "success",
+                                buttons: false,
+                                closeOnClickOutside: false,
+                                timer: 2000
+                            });
                         if ($.fn.DataTable.isDataTable('#tabelmu')) {
                             //table yg sudah dibentuk menjadi datatable harus d rebuild lagi untuk di instantiasi ulang
                             $('#tabelmu').DataTable().clear();
@@ -411,6 +430,48 @@ scratch. This page gets rid of all links and provides the needed markup only.
         }
     </script>
 
+    <script>
+        function sendData(id) {
+
+            $.ajax({
+                type: 'GET',
+                url: '/doc/' + id,
+                success: function (data) {
+
+                    $.ajax({
+                        type: 'POST',
+                        url: 'https://dcktrp.jakarta.go.id/sikat/api/update-ocr?key=d1cde049046763854eb8bd838479b33a5b5df8316ddfcbac2cd7779ee644aceb4f5712875a1c56ef81d92c2be9fc3da893de228b134c23257b2597b779bffab6',
+                        crossDomain: true,
+                        dataType: 'json',
+                        data: {
+                            "ocr" : data.result,
+                            "file_name" : data.docName
+                        },
+                        success: function (response) {
+                            console.log(response)
+                            swal({
+                                title: "Sent!",
+                                text: "Data berhasil dikirim",
+                                type: "success",
+                                buttons: false,
+                                closeOnClickOutside: false,
+                                timer: 3000
+                            });
+                        }
+                    });
+
+                    swal({
+                        title: "Loading...",
+                        text: "Please wait...",
+                        type: "success",
+                        buttons: false,
+                        closeOnClickOutside: false
+                    });
+                }
+            });
+        }
+    </script>
+
 	<script>
             if ($.fn.DataTable.isDataTable('#tabelku')) {
                 //table yg sudah dibentuk menjadi datatable harus d rebuild lagi untuk di instantiasi ulang
@@ -424,10 +485,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     $('#tabelku').DataTable({
                         data: datatable,
                         "columns": [
-                            // {
-                            //     title: "No",
-                            //     data: 'id'
-                            // },
                             {
                                 title: "Nama File",
                                 data: 'docName'
@@ -448,7 +505,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 data: null,
                                 render: function (data, type, row) {
                                     return "<button class='btn-primary' onclick=lihatData('" + data.id + "') >Lihat Data</button>" +
-                                        "<button class='btn-default' onclick=fixData('" + data.id + "') >Perhalus Data</button>"
+                                        "<button class='btn-default' onclick=fixData('" + data.id + "') >Perhalus Data</button>" +
+                                    "<button class='btn-warning' onclick=sendData('" + data.id + "') >Kirim Data</button>"
                                 }
                             }
                         ]
