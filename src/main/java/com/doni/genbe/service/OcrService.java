@@ -2,17 +2,17 @@ package com.doni.genbe.service;
 
 import com.doni.genbe.helper.SuccessType;
 import com.doni.genbe.model.entity.Document;
+import com.doni.genbe.model.entity.FolderPath;
 import com.doni.genbe.repository.DocumentRepository;
+import com.doni.genbe.repository.FolderPathRepository;
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,11 +23,13 @@ import java.util.List;
 @Service
 public class OcrService {
     private final DocumentRepository repository;
-    private final Path newFolder = Paths.get("file/new");
-    private final Path finishFolder = Paths.get("file/finish");
+    private final FolderPathRepository folderPathRepository;
+    private final Path newFolder = Paths.get("D:\\project\\genbe\\file\\upload\\");
+    private final Path finishFolder = Paths.get("D:\\project\\genbe\\file\\finish");
 
-    public OcrService(DocumentRepository repository) {
+    public OcrService(DocumentRepository repository, FolderPathRepository folderPathRepository) {
         this.repository = repository;
+        this.folderPathRepository = folderPathRepository;
     }
 
     @Transactional
@@ -36,7 +38,7 @@ public class OcrService {
             throw new Exception("file sudah pernah di input");
         }
         Document document = new Document();
-        document.setStartingPath(uploadDocument(file, newFolder));
+        document.setStartingPath(uploadDocument(file, Paths.get(folderPathRepository.findById(1L).orElse(null).getUploadPath())));
         document.setScanned(false);
         document.setDocName(file.getOriginalFilename());
         return repository.save(document);
@@ -75,9 +77,9 @@ public class OcrService {
                     val.setResult(image.doOCR(theDocument));
                     val.setScanned(true);
                     val.setSuccess(SuccessType.SUCCEED);
-                    val.setFinishingPath(finishFolder + "\\" + theDocument.getName());
+                    val.setFinishingPath(Paths.get(folderPathRepository.findById(1L).orElse(null).getFinishPath()) + "\\" + theDocument.getName());
                     repository.save(val);
-                    Files.copy(Paths.get(val.getStartingPath()), Paths.get("file/finish/" + theDocument.getName()), StandardCopyOption.COPY_ATTRIBUTES);
+                    Files.copy(Paths.get(val.getStartingPath()), Paths.get(folderPathRepository.findById(1L).orElse(null).getFinishPath() + theDocument.getName()), StandardCopyOption.COPY_ATTRIBUTES);
                     Files.deleteIfExists(Paths.get(val.getStartingPath()));
                 } catch (TesseractException | IOException e) {
                     val.setScanned(true);
@@ -85,6 +87,36 @@ public class OcrService {
                     System.out.println(e);
                 }
         });
+    }
+
+    @Transactional
+    public void scanDocumentThisFolder() throws Exception {
+        File directoryPath = new File(folderPathRepository.findById(1L).orElse(null).getNewPath());
+        File filesList[] = directoryPath.listFiles();
+        System.out.println("List of files and directories in the specified directory:");
+        for(File file : filesList) {
+            Document document = new Document();
+            document.setStartingPath(file.getAbsolutePath());
+            document.setDocName(file.getName());
+
+            ITesseract image = new Tesseract();
+            File theDocument = new File(file.getAbsolutePath());
+
+            try {
+                document.setResult(image.doOCR(theDocument));
+                document.setScanned(true);
+                document.setSuccess(SuccessType.SUCCEED);
+                document.setFinishingPath(Paths.get(folderPathRepository.findById(1L).orElse(null).getFinishPath()) + "\\" + theDocument.getName());
+                repository.save(document);
+                Files.copy(Paths.get(file.getAbsolutePath()), Paths.get(folderPathRepository.findById(1L).orElse(null).getFinishPath() + theDocument.getName()), StandardCopyOption.COPY_ATTRIBUTES);
+                Files.deleteIfExists(Paths.get(file.getAbsolutePath()));
+            } catch (TesseractException | IOException e) {
+                document.setScanned(true);
+                document.setSuccess(SuccessType.FAILED);
+                System.out.println(e);
+            }
+
+        }
     }
 
     public List<Document> getAll() {
@@ -110,8 +142,23 @@ public class OcrService {
         return repository.findById(id).orElse(null).getResult();
     }
 
+    public Document setSent(Long id) {
+        Document document = repository.findById(id).orElse(null);
+        document.setSent(true);
+        return repository.save(document);
+    }
+
     public Document getDocument(Long id) {
         return repository.findById(id).orElse(null);
+    }
+
+    public FolderPath getPath() {
+        return folderPathRepository.findById(1L).orElse(null);
+    }
+
+    public FolderPath savePath(FolderPath req) {
+        req.setId(1L);
+        return folderPathRepository.save(req);
     }
 
 

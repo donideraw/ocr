@@ -23,6 +23,8 @@ public class Document {
     private String finishingPath;
     @Column (name = "is_scanned")
     private boolean isScanned;
+    @Column (name = "is_sent")
+    private boolean isSent = false;
     private SuccessType success;
     private String result;
 }

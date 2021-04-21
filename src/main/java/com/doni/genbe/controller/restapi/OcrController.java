@@ -1,5 +1,6 @@
 package com.doni.genbe.controller.restapi;
 
+import com.doni.genbe.model.entity.FolderPath;
 import com.doni.genbe.service.OcrService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,11 @@ public class OcrController {
         service.scanDocument();
     }
 
+    @GetMapping(value = "/scanFolder")
+    public void scanDocumentFolder() throws Exception{
+        service.scanDocumentThisFolder();
+    }
+
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> uploadDocument(@RequestParam("file") MultipartFile file) throws Exception {
 
@@ -29,6 +35,16 @@ public class OcrController {
     @GetMapping("/get")
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(service.getAll());
+    }
+
+    @GetMapping("/path")
+    public ResponseEntity<?> getPath() {
+        return ResponseEntity.ok(service.getPath());
+    }
+
+    @PostMapping("/path")
+    public ResponseEntity<?> savePath(@RequestBody FolderPath req) {
+        return ResponseEntity.ok(service.savePath(req));
     }
 
     @GetMapping("/false")
@@ -44,6 +60,11 @@ public class OcrController {
     @GetMapping("/doc/{id}")
     public ResponseEntity<?> getDocument(@PathVariable Long id) {
         return ResponseEntity.ok(service.getDocument(id));
+    }
+
+    @GetMapping("/sent/{id}")
+    public ResponseEntity<?> sendData(@PathVariable Long id) {
+        return ResponseEntity.ok(service.setSent(id));
     }
 
     @GetMapping("/fix/{id}")

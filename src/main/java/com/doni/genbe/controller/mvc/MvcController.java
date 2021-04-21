@@ -10,7 +10,7 @@ public class MvcController {
 		return "table";
 	}
 
-	@GetMapping("/formpendidikan")
+	@GetMapping("/editpath")
 	public String insertPendidikan() {
 		return "pendidikan";
 	}
