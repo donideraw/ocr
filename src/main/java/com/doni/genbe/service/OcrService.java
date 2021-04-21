@@ -79,7 +79,7 @@ public class OcrService {
                     val.setSuccess(SuccessType.SUCCEED);
                     val.setFinishingPath(Paths.get(folderPathRepository.findById(1L).orElse(null).getFinishPath()) + "\\" + theDocument.getName());
                     repository.save(val);
-                    Files.copy(Paths.get(val.getStartingPath()), Paths.get(folderPathRepository.findById(1L).orElse(null).getFinishPath() + theDocument.getName()), StandardCopyOption.COPY_ATTRIBUTES);
+                    Files.copy(Paths.get(val.getStartingPath()), Paths.get(folderPathRepository.findById(1L).orElse(null).getFinishPath() + "\\" + theDocument.getName()), StandardCopyOption.COPY_ATTRIBUTES);
                     Files.deleteIfExists(Paths.get(val.getStartingPath()));
                 } catch (TesseractException | IOException e) {
                     val.setScanned(true);
