@@ -138,9 +138,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                           </div>
                           <div class="col-12" align="right">
                               <button type="button"
-                                      class="btn btn-primary" id="proses">Proses from Upload</button>
+                                      class="btn btn-primary" id="proses">Process from Upload</button>
                               <button type="button"
-                                      class="btn btn-primary" id="proses2">Proses from Folder</button>
+                                      class="btn btn-primary" id="proses2">Process from Folder</button>
                           </div>
 
                       <br>
@@ -369,18 +369,38 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             "file_name" : data.docName
                         },
                         success: function (response) {
-
+                            if (response.status == true) {
                             $.ajax({
                                 type: 'GET',
                                 url: '/sent/' + id,
                                 success: function (data) {
+                                    swal({
+                                        title: "Sent!",
+                                        text: response.message,
+                                        type: "success",
+                                        buttons: false,
+                                        closeOnClickOutside: false,
+                                        timer: 3000
+                                    });
                                     setTimeout(window.location.reload(), 3000);
                                 }
                             });
 
+                            } else {
+                                swal({
+                                    title: "Failed!",
+                                    text: response.message,
+                                    type: "success",
+                                    buttons: true,
+                                    closeOnClickOutside: true,
+                                    timer: 3000
+                                });
+                            }
+                        },
+                        error: function (response) {
                             swal({
-                                title: "Sent!",
-                                text: response.message,
+                                title: "Failed!",
+                                text: "Gagal kirim data",
                                 type: "success",
                                 buttons: false,
                                 closeOnClickOutside: false,
