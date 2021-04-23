@@ -71,4 +71,16 @@ public class OcrController {
     public ResponseEntity<?> fix(@PathVariable Long id) {
         return ResponseEntity.ok(service.fixString(id));
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.ok("Sukses");
+    }
+
+    @GetMapping("test")
+    public ResponseEntity<?> test() {
+        service.makeApiCallMassive();
+        return ResponseEntity.ok("sukses");
+    }
 }

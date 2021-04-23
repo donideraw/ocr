@@ -13,5 +13,8 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
     @Query(value = "select * from t_document where is_scanned = false order by docid desc", nativeQuery = true)
     List<Document> findAllScannedFalse();
 
+    @Query(value = "select * from t_document where is_sent = false and is_scanned = true order by docid desc", nativeQuery = true)
+    List<Document> findAllSentFalse();
+
     Document findByDocName(String docName);
 }

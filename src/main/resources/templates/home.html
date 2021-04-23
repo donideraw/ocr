@@ -352,6 +352,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </script>
 
     <script>
+        function deleteData(id) {
+            $.ajax({
+                type: 'DELETE',
+                url: '/delete/' + id,
+                success: function (hasil) {
+                    swal({
+                        title: "Deleted!",
+                        text: "Berhasil hapus data",
+                        type: "success",
+                        buttons: false,
+                        closeOnClickOutside: true,
+                        timer: 3000
+                    });
+                    setTimeout(window.location.reload(), 3000);
+                }
+            });
+        }
+    </script>
+
+    <script>
         function sendData(id) {
 
             $.ajax({
@@ -456,11 +476,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     if(data.sent == true) {
                                         return "<button class='btn-primary' onclick=lihatData('" + data.id + "') >Lihat Data</button>" +
                                             "<button class='btn-default' onclick=fixData('" + data.id + "') >Perhalus Data</button>" +
-                                            "<button class='btn-warning' onclick=sendData('" + data.id + "') disabled >Terkirim!</button>"
+                                            "<button class='btn-warning' onclick=sendData('" + data.id + "') disabled >Terkirim!</button>" +
+                                            "<button class='btn-danger' onclick=sendData('" + data.id + "') >Hapus</button>"
                                     } else {
                                         return "<button class='btn-primary' onclick=lihatData('" + data.id + "') >Lihat Data</button>" +
                                             "<button class='btn-default' onclick=fixData('" + data.id + "') >Perhalus Data</button>" +
-                                            "<button class='btn-warning' onclick=sendData('" + data.id + "') >Kirim Data</button>"
+                                            "<button class='btn-warning' onclick=sendData('" + data.id + "') >Kirim Data</button>" +
+                                            "<button class='btn-danger' onclick=sendData('" + data.id + "') >Hapus</button>"
                                     }
 
                                 }

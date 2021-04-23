@@ -9,6 +9,7 @@ import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
@@ -18,7 +19,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OcrService {
@@ -93,29 +96,31 @@ public class OcrService {
     public void scanDocumentThisFolder() throws Exception {
         File directoryPath = new File(folderPathRepository.findById(1L).orElse(null).getNewPath());
         File filesList[] = directoryPath.listFiles();
-        System.out.println("List of files and directories in the specified directory:");
-        for(File file : filesList) {
-            Document document = new Document();
-            document.setStartingPath(file.getAbsolutePath());
-            document.setDocName(file.getName());
+        if (filesList.length > 0) {
+            System.out.println("List of files and directories in the specified directory:");
+            for (File file : filesList) {
+                Document document = new Document();
+                document.setStartingPath(file.getAbsolutePath());
+                document.setDocName(file.getName());
 
-            ITesseract image = new Tesseract();
-            File theDocument = new File(file.getAbsolutePath());
+                ITesseract image = new Tesseract();
+                File theDocument = new File(file.getAbsolutePath());
 
-            try {
-                document.setResult(image.doOCR(theDocument));
-                document.setScanned(true);
-                document.setSuccess(SuccessType.SUCCEED);
-                document.setFinishingPath(Paths.get(folderPathRepository.findById(1L).orElse(null).getFinishPath()) + "\\" + theDocument.getName());
-                repository.save(document);
-                Files.copy(Paths.get(file.getAbsolutePath()), Paths.get(folderPathRepository.findById(1L).orElse(null).getFinishPath() + theDocument.getName()), StandardCopyOption.COPY_ATTRIBUTES);
-                Files.deleteIfExists(Paths.get(file.getAbsolutePath()));
-            } catch (TesseractException | IOException e) {
-                document.setScanned(true);
-                document.setSuccess(SuccessType.FAILED);
-                System.out.println(e);
+                try {
+                    document.setResult(image.doOCR(theDocument));
+                    document.setScanned(true);
+                    document.setSuccess(SuccessType.SUCCEED);
+                    document.setFinishingPath(Paths.get(folderPathRepository.findById(1L).orElse(null).getFinishPath()) + "\\" + theDocument.getName());
+                    repository.save(document);
+                    Files.copy(Paths.get(file.getAbsolutePath()), Paths.get(folderPathRepository.findById(1L).orElse(null).getFinishPath() + theDocument.getName()), StandardCopyOption.COPY_ATTRIBUTES);
+                    Files.deleteIfExists(Paths.get(file.getAbsolutePath()));
+                } catch (TesseractException | IOException e) {
+                    document.setScanned(true);
+                    document.setSuccess(SuccessType.FAILED);
+                    System.out.println(e);
+                }
+
             }
-
         }
     }
 
@@ -125,6 +130,10 @@ public class OcrService {
 
     public List<Document> getAllUploaded() {
         return repository.findAllScannedFalse();
+    }
+
+    public void delete(Long id) {
+        repository.deleteById(id);
     }
 
     public String fixString(Long id) {
@@ -161,5 +170,25 @@ public class OcrService {
         return folderPathRepository.save(req);
     }
 
+    public void makeApiCallMassive() {
+        final String uri = "https://dcktrp.jakarta.go.id/sikat/api/update-ocr?key=d1cde049046763854eb8bd838479b33a5b5df8316ddfcbac2cd7779ee644aceb4f5712875a1c56ef81d92c2be9fc3da893de228b134c23257b2597b779bffab6";
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        List<Document> documents = repository.findAllSentFalse();
+
+        if (documents.size() > 0) {
+            documents.forEach(val -> {
+                Map<String, String> params = new HashMap<>();
+                params.put("file_name", val.getDocName());
+                params.put("ocr", val.getResult());
+                String result = restTemplate.postForObject(uri, params, String.class);
+                val.setSent(true);
+                repository.save(val);
+                System.out.println(result);
+            });
+
+        }
+    }
 
 }
