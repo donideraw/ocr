@@ -162,12 +162,29 @@ public class OcrService {
         return repository.findById(id).orElse(null).getResult();
     }
 
-    public String getDir(Long id) {
+    public File getDir(Long id) {
+//        String dir = repository.findById(id).orElse(null).getFinishingPath();
+//        if (dir == null) {
+//            dir = repository.findById(id).orElse(null).getStartingPath();
+//        }
+//        dir = Paths.get(dir).normalize().toString();
+
+        Document document = repository.findById(id).orElse(null);
+        if (document.getFinishingPath() != null)
+            return new File(document.getFinishingPath());
+        else
+            return new File(document.getStartingPath());
+    }
+
+    public String getDirString(Long id) {
         String dir = repository.findById(id).orElse(null).getFinishingPath();
         if (dir == null) {
             dir = repository.findById(id).orElse(null).getStartingPath();
         }
-        dir = Paths.get(dir).normalize().toString();
+
+        if(dir.substring(dir.length()-3).equals("pdf")) {
+            dir = "pdf";
+        }
         return dir;
     }
 

@@ -3,12 +3,15 @@ package com.doni.genbe.controller.restapi;
 import com.doni.genbe.model.dto.SettingDto;
 import com.doni.genbe.model.entity.FolderPath;
 import com.doni.genbe.service.OcrService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 
 @RestController
@@ -73,8 +76,21 @@ public class OcrController {
     }
 
     @GetMapping("/dir/{id}")
-    public ResponseEntity<?> getDir(@PathVariable Long id) {
-        return ResponseEntity.ok(service.getDir(id));
+    public ResponseEntity<?> getDir(@PathVariable Long id) throws IOException {
+        File file = service.getDir(id);
+
+        byte[] files = Files.readAllBytes(file.toPath());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_MIXED);
+        headers.setContentLength(files.length);
+
+        return ResponseEntity.ok(files);
+    }
+
+    @GetMapping("/direct/{id}")
+    public ResponseEntity<?> getDirect(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getDirString(id));
     }
 
     @GetMapping("/doc/{id}")
