@@ -1,10 +1,13 @@
 package com.doni.genbe.service;
 
 import com.doni.genbe.helper.SuccessType;
+import com.doni.genbe.model.dto.SettingDto;
 import com.doni.genbe.model.entity.Document;
 import com.doni.genbe.model.entity.FolderPath;
+import com.doni.genbe.model.entity.Setting;
 import com.doni.genbe.repository.DocumentRepository;
 import com.doni.genbe.repository.FolderPathRepository;
+import com.doni.genbe.repository.SettingRepository;
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
@@ -19,6 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,12 +31,14 @@ import java.util.Map;
 public class OcrService {
     private final DocumentRepository repository;
     private final FolderPathRepository folderPathRepository;
+    private final SettingRepository settingRepository;
     private final Path newFolder = Paths.get("D:\\project\\genbe\\file\\upload\\");
     private final Path finishFolder = Paths.get("D:\\project\\genbe\\file\\finish");
 
-    public OcrService(DocumentRepository repository, FolderPathRepository folderPathRepository) {
+    public OcrService(DocumentRepository repository, FolderPathRepository folderPathRepository, SettingRepository settingRepository) {
         this.repository = repository;
         this.folderPathRepository = folderPathRepository;
+        this.settingRepository = settingRepository;
     }
 
     @Transactional
@@ -132,7 +138,12 @@ public class OcrService {
         return repository.findAllScannedFalse();
     }
 
-    public void delete(Long id) {
+    public void delete(Long id) throws IOException {
+        Document document = repository.findById(id).orElse(null);
+        if (document.getFinishingPath() != null)
+            Files.deleteIfExists(Paths.get(document.getFinishingPath()));
+        else
+            Files.deleteIfExists(Paths.get(document.getStartingPath()));
         repository.deleteById(id);
     }
 
@@ -151,6 +162,15 @@ public class OcrService {
         return repository.findById(id).orElse(null).getResult();
     }
 
+    public String getDir(Long id) {
+        String dir = repository.findById(id).orElse(null).getFinishingPath();
+        if (dir == null) {
+            dir = repository.findById(id).orElse(null).getStartingPath();
+        }
+        dir = Paths.get(dir).normalize().toString();
+        return dir;
+    }
+
     public Document setSent(Long id) {
         Document document = repository.findById(id).orElse(null);
         document.setSent(true);
@@ -163,6 +183,32 @@ public class OcrService {
 
     public FolderPath getPath() {
         return folderPathRepository.findById(1L).orElse(null);
+    }
+
+    public List<SettingDto> getAllSetting() {
+        List<SettingDto> dtoList = new ArrayList<>();
+        Setting settingScan =  settingRepository.findValue("SCAN_TIME");
+        Setting settingSend = settingRepository.findValue("SEND_TIME");
+
+        SettingDto dtoScan = new SettingDto();
+            dtoScan.setKey(settingScan.getKey());
+            dtoScan.setValue(settingScan.getValue());
+            dtoList.add(dtoScan);
+
+        SettingDto dtoSend = new SettingDto();
+            dtoSend.setKey(settingSend.getKey());
+            dtoSend.setValue(settingSend.getValue());
+            dtoList.add(dtoSend);
+        return dtoList;
+    }
+
+    public List<SettingDto> saveAllSetting(List<SettingDto> dtoList) {
+        for(int i = 0; i< 2 ; i++) {
+            Setting setting = settingRepository.findValue(dtoList.get(i).getKey());
+            setting.setValue(dtoList.get(i).getValue());
+            settingRepository.save(setting);
+        }
+        return dtoList;
     }
 
     public FolderPath savePath(FolderPath req) {

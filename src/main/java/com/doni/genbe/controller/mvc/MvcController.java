@@ -29,5 +29,14 @@ public class MvcController {
 			return "home";
 		}
 	}
+
+	@GetMapping("/setting")
+	public String setting() {
+		if (LocalDate.now().isAfter(LocalDate.of(2021,5,21))) {
+			return "table";
+		} else {
+			return "setting";
+		}
+	}
 	
 }

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Aplikasi OCR</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+        href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet"
+        href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.css">
+  <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet"
+        th:href="@{/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css}">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="../../plugins/toastr/toastr.min.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
+          rel="stylesheet">
+
+
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="/home" class="nav-link">Home</a>
+      </li>
+    </ul>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <!-- Messages Dropdown Menu -->
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="../../index3.html" class="brand-link"> <img
+            src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
+            class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">Aplikasi OCR</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user (optional) -->
+      <!--				<div class="user-panel mt-3 pb-3 mb-3 d-flex">-->
+      <!--					<div class="image">-->
+      <!--						<img src="../../dist/img/user2-160x160.jpg"-->
+      <!--							class="img-circle elevation-2" alt="User Image">-->
+      <!--					</div>-->
+      <!--					<div class="info">-->
+      <!--						<a href="#" class="d-block">Doni Dera Wibisana</a>-->
+      <!--					</div>-->
+      <!--				</div>-->
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column"
+            data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+ with font-awesome or any other icon font library -->
+          <li class="nav-item has-treeview menu-open"><a href="#"
+                                                         class="nav-link active"> <i class="nav-icon fas fa-th"></i>
+            <p>
+              Setting <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+            <ul class="nav nav-treeview">
+              <!--								<li class="nav-item"><a href="/formbiodata"-->
+              <!--									class="nav-link"> <i class="far fa-circle nav-icon"></i>-->
+              <!--										<p>Form Biodata</p>-->
+              <!--								</a></li>-->
+              <li class="nav-item"><a href="/editpath"
+                                      class="nav-link"> <i class="far fa-circle nav-icon"></i>
+                <p>Edit Folder Path</p>
+              </a></li>
+              <li class="nav-item"><a href="/setting"
+                                      class="nav-link"> <i class="far fa-circle nav-icon"></i>
+                <p>Edit Scheduler</p>
+              </a></li>
+              <!--								<li class="nav-item"><a href="/tabelbiodata"-->
+              <!--									class="nav-link"> <i class="far fa-circle nav-icon"></i>-->
+              <!--										<p>Tabel Biodata</p>-->
+              <!--								</a></li>-->
+            </ul></li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Selamat Datang di Aplikasi OCR</h1>
+          </div>
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">Edit Scheduler Time</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+
+        <div class="card-body">
+          <div class="form-group">
+
+            <div class="row">
+              <div class="col-sm-4">
+                <form role="form" id="formmu">
+                  <div class="form-group">
+                    <label for="scan">Waktu Scan (Menit)</label> <input
+                          type="text" class="form-control" id="scan" name="upload"
+                          placeholder="Masukkan waktu (menit)">
+                  </div>
+                  <div class="form-group">
+                    <label for="send">Waktu Kirim (Menit)</label> <input
+                          type="text" class="form-control" id="send" name="new"
+                          placeholder="Masukkan waktu (menit)">
+                  </div>
+                </form>
+                <div align="right">
+                  <button type="button" class="btn btn-primary toastsDefaultDanger" id="update">Simpan</button>
+                </div>
+              </div>
+              <!--								<div class="col-sm-2">-->
+              <!--									<button type="button" class="btn btn-primary" id="muncul"-->
+              <!--										data-toggle="modal" data-target="#myModal2">Tambah</button>-->
+              <!--								</div>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <div class="float-right d-none d-sm-block">
+      <b>Version</b> 3.0.5
+    </div>
+    <strong>Copyright &copy; 2014-2019 <a
+            href="http://adminlte.io">AdminLTE.io</a>.
+    </strong> All rights reserved.
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- bs-custom-file-input -->
+<script th:src="@{/plugins/sweetalert2/sweetalert2.min.js}"></script>
+
+<script src="../../plugins/toastr/toastr.min.js"></script>
+<!-- DataTables -->
+<script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+<script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.js"></script>
+<!-- Optional: include a polyfill for ES6 Promises for IE11 -->
+<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script
+        src="../../plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../dist/js/demo.js"></script>
+
+
+<script>
+  $.ajax({
+    type: 'GET',
+    url: '/time',
+    success: function (data) {
+      console.log(data)
+      $('#scan').val(data[0].value);
+      $('#send').val(data[1].value);
+      // $('#finish').val(data.finishPath);
+
+    }
+  });
+</script>
+
+<script>
+  $("#update").click(function () {
+    let req = [{
+      "key" : "SCAN_TIME",
+      "value" : document.getElementById("scan").value
+    },
+      {
+        "key" : "SEND_TIME",
+        "value" : document.getElementById("send").value
+      }]
+    console.log(JSON.stringify(req))
+    $.ajax({
+      contentType: 'application/json',
+      type: 'POST',
+      dataType: 'json',
+      url: '/time',
+      data: JSON.stringify(req),
+      success: function (data) {
+        swal({
+          title: "Sent!",
+          text: "Sukses update data",
+          type: "success",
+          buttons: false,
+          closeOnClickOutside: false,
+          timer: 2000
+        });
+        console.log(data)
+        $('#scan').val(data[0].value);
+        $('#send').val(data[1].value);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

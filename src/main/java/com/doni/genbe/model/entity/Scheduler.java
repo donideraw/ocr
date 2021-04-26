@@ -3,6 +3,7 @@ package com.doni.genbe.model.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 
 @Data
 @Entity
@@ -14,4 +15,7 @@ public class Scheduler {
 
     @Column(name = "is_running")
     private boolean isRunning;
+
+    @Column(name = "running_at")
+    private LocalTime runningAt;
 }

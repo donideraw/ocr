@@ -1,11 +1,15 @@
 package com.doni.genbe.controller.restapi;
 
+import com.doni.genbe.model.dto.SettingDto;
 import com.doni.genbe.model.entity.FolderPath;
 import com.doni.genbe.service.OcrService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
 
 @RestController
 public class OcrController {
@@ -47,6 +51,17 @@ public class OcrController {
         return ResponseEntity.ok(service.savePath(req));
     }
 
+    @GetMapping("/time")
+    public ResponseEntity<?> getTime() {
+        return ResponseEntity.ok(service.getAllSetting());
+    }
+
+    @PostMapping("/time")
+    public ResponseEntity<?> saveTime(@RequestBody List<SettingDto> dtoList) {
+        return ResponseEntity.ok(service.saveAllSetting(dtoList));
+    }
+
+
     @GetMapping("/false")
     public ResponseEntity<?> getFalse() {
         return ResponseEntity.ok(service.getAllUploaded());
@@ -55,6 +70,11 @@ public class OcrController {
     @GetMapping("/get/{id}")
     public ResponseEntity<?> getAll(@PathVariable Long id) {
         return ResponseEntity.ok(service.getOne(id));
+    }
+
+    @GetMapping("/dir/{id}")
+    public ResponseEntity<?> getDir(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getDir(id));
     }
 
     @GetMapping("/doc/{id}")
@@ -73,7 +93,7 @@ public class OcrController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) throws IOException {
         service.delete(id);
         return ResponseEntity.ok("Sukses");
     }
