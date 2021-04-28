@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aplikasi OCR | Log in</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+<!--  &lt;!&ndash; icheck bootstrap &ndash;&gt;-->
+<!--  <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">-->
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+    <a href="/login"><b>Aplikasi</b>OCR</a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body">
+      <p class="login-box-msg">Sign in to start your session</p>
+
+      <form role="form" id="formmu">
+        <div class="input-group mb-3">
+          <input id="username" type="text" class="form-control" placeholder="Username">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input id="password" type="password" class="form-control" placeholder="Password">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+          <!-- /.col -->
+
+          <!-- /.col -->
+      </form>
+
+      <div class="col-4">
+        <button id="update" type="submit" class="btn btn-primary btn-block">Sign In</button>
+      </div>
+
+<!--      <p class="mb-1">-->
+<!--        <a href="forgot-password.html">I forgot my password</a>-->
+<!--      </p>-->
+<!--      <p class="mb-0">-->
+<!--        <a href="register.html" class="text-center">Register a new membership</a>-->
+<!--      </p>-->
+    </div>
+    <!-- /.login-card-body -->
+  </div>
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+  $("#update").click(function () {
+    let req = {
+      "username" : document.getElementById("username").value,
+      "password" : document.getElementById("password").value
+    }
+    console.log(JSON.stringify(req))
+    $.ajax({
+      contentType: 'application/json',
+      type: 'POST',
+      dataType: 'json',
+      url: '/auth/login',
+      data: JSON.stringify(req),
+      success: function (data) {
+        localStorage.setItem("token", data.token)
+        localStorage.setItem("role", data.userType)
+        window.location.replace("/home")
+      },
+      error: function (err) {
+        console.log(err.responseJSON.message);
+        swal({
+          title: "Failed to login!",
+          text: err.responseJSON.message,
+          type: "error",
+          buttons: false,
+          closeOnClickOutside: false,
+          timer: 2000
+        });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

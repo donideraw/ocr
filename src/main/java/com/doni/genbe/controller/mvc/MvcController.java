@@ -38,5 +38,15 @@ public class MvcController {
 			return "setting";
 		}
 	}
+
+	@GetMapping("/login")
+	public String login() {
+			return "login";
+	}
+
+	@GetMapping("/user")
+	public String user() {
+		return "user";
+	}
 	
 }

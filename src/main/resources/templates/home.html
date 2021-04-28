@@ -32,6 +32,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <li class="nav-item d-none d-sm-inline-block">
         <a href="/home" class="nav-link">Home</a>
       </li>
+      <li class="nav-item d-none d-sm-inline-block right--1-l">
+          <a id="logout" href="#" role="button" class="nav-link">Logout</a>
+      </li>
     </ul>
 
     <!-- Right navbar links -->
@@ -44,7 +47,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
 			<!-- Brand Logo -->
-			<a href="../../index3.html" class="brand-link"> <img
+			<a href="/home" class="brand-link"> <img
 				src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
 				class="brand-image img-circle elevation-3" style="opacity: .8">
 				<span class="brand-text font-weight-light">Aplikasi OCR</span>
@@ -93,6 +96,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!--										<p>Tabel Biodata</p>-->
 <!--								</a></li>-->
 							</ul></li>
+                        <li class="nav-item has-treeview menu-close"><a href="#"
+                                                                       class="nav-link"> <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                User (Admin only) <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                            <ul class="nav nav-treeview">
+                                <!--								<li class="nav-item"><a href="/formbiodata"-->
+                                <!--									class="nav-link"> <i class="far fa-circle nav-icon"></i>-->
+                                <!--										<p>Form Biodata</p>-->
+                                <!--								</a></li>-->
+                                <li class="nav-item"><a href="/user"
+                                                        class="nav-link"> <i class="far fa-circle nav-icon"></i>
+                                    <p>Add New User</p>
+                                </a></li>
+                                <!--								<li class="nav-item"><a href="/tabelbiodata"-->
+                                <!--									class="nav-link"> <i class="far fa-circle nav-icon"></i>-->
+                                <!--										<p>Tabel Biodata</p>-->
+                                <!--								</a></li>-->
+                            </ul></li>
 					</ul>
 				</nav>
 				<!-- /.sidebar-menu -->
@@ -247,6 +270,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             $.ajax({
                 type: 'GET',
                 url: '/scan',
+                headers: {"Authorization": "Bearer " + localStorage.getItem('token')},
                 success: function () {
                     console.log("test");
                     window.location.reload();
@@ -270,6 +294,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             $.ajax({
                 type: 'GET',
                 url: '/scanFolder',
+                headers: {"Authorization": "Bearer " + localStorage.getItem('token')},
                 success: function () {
                     window.location.reload();
                 }
@@ -286,6 +311,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
         })
     </script>
 
+<script>
+    $("#logout").click(function() {
+        localStorage.removeItem('token');
+        window.location.replace("/login")
+    })
+</script>
+
     <script>
         $(document).ready(function () {
             // bind form submit event
@@ -297,6 +329,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 // use $.ajax() to upload file
                 $.ajax({
                     url: "/upload",
+                    headers: {"Authorization": "Bearer " + localStorage.getItem('token')},
                     type: "POST",
                     data: new FormData(this),
                     enctype: 'multipart/form-data',
@@ -320,6 +353,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         $.ajax({
                             type: 'GET',
                             url: '/false',
+                            headers: {"Authorization": "Bearer " + localStorage.getItem('token')},
                             success: function (datatable) {
                                 $('#tabelmu').DataTable({
                                     data: datatable,
@@ -347,6 +381,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             $.ajax({
                 type: 'GET',
                 url: '/get/' + id,
+                headers: {"Authorization": "Bearer " + localStorage.getItem('token')},
                 success: function (hasil) {
                     if (hasil.length > 0) {
                         $('#jumlahorang').html(hasil);
@@ -364,6 +399,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             $.ajax({
                 type: 'GET',
                 url: '/fix/' + id,
+                headers: {"Authorization": "Bearer " + localStorage.getItem('token')},
                 success: function (hasil) {
                     if (hasil.length > 0) {
                         $('#jumlahorang').html(hasil);
@@ -380,6 +416,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             $.ajax({
                 type: 'DELETE',
                 url: '/delete/' + id,
+                headers: {"Authorization": "Bearer " + localStorage.getItem('token')},
                 success: function (hasil) {
                     swal({
                         title: "Deleted!",
@@ -404,11 +441,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     responseType: 'blob'
                 },
                 url: '/dir/' + id,
+                headers: {"Authorization": "Bearer " + localStorage.getItem('token')},
                 success: function (data) {
 
                     $.ajax({
                         type: 'GET',
                         url: '/direct/' + id,
+                        headers: {"Authorization": "Bearer " + localStorage.getItem('token')},
                         success: function (hasil) {
                             if (hasil == "pdf") {
                                 var blob = new Blob([data], {type: 'application/pdf'});
@@ -432,6 +471,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             $.ajax({
                 type: 'GET',
                 url: '/doc/' + id,
+                headers: {"Authorization": "Bearer " + localStorage.getItem('token')},
                 success: function (data) {
 
                     $.ajax({
@@ -448,6 +488,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             $.ajax({
                                 type: 'GET',
                                 url: '/sent/' + id,
+                                headers: {"Authorization": "Bearer " + localStorage.getItem('token')},
                                 success: function (data) {
                                     swal({
                                         title: "Sent!",
@@ -497,14 +538,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </script>
 
 	<script>
+            if (localStorage.getItem("token") == null || localStorage.getItem("token") == '') {
+                swal({
+                    title: "Error!",
+                    text: "Please login first",
+                    type: "success",
+                    buttons: false,
+                    timer: 3000
+                });
+                setTimeout(function(){
+                    window.location.replace("/login")
+                },2000);
+
+            }
             if ($.fn.DataTable.isDataTable('#tabelku')) {
                 //table yg sudah dibentuk menjadi datatable harus d rebuild lagi untuk di instantiasi ulang
                 $('#tabelku').DataTable().clear();
                 $('#tabelku').DataTable().destroy();
             }
+            console.log(localStorage.getItem("token"))
             $.ajax({
                 type: 'GET',
                 url: '/get',
+                headers: {"Authorization": "Bearer " + localStorage.getItem('token')},
                 success: function (datatable) {
                     $('#tabelku').DataTable({
                         data: datatable,

@@ -2,12 +2,14 @@ package com.doni.genbe.service;
 
 import com.doni.genbe.helper.SuccessType;
 import com.doni.genbe.model.dto.SettingDto;
+import com.doni.genbe.model.dto.AppAuth;
 import com.doni.genbe.model.entity.Document;
 import com.doni.genbe.model.entity.FolderPath;
 import com.doni.genbe.model.entity.Setting;
 import com.doni.genbe.repository.DocumentRepository;
 import com.doni.genbe.repository.FolderPathRepository;
 import com.doni.genbe.repository.SettingRepository;
+import com.doni.genbe.util.SecurityUtil;
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
@@ -131,6 +133,7 @@ public class OcrService {
     }
 
     public List<Document> getAll() {
+        AppAuth auth = SecurityUtil.getAuth();
         return repository.findAllScannedIs();
     }
 

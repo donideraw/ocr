@@ -43,6 +43,9 @@
 				<li class="nav-item d-none d-sm-inline-block">
 					<a href="/home" class="nav-link">Home</a>
 				</li>
+				<li class="nav-item d-none d-sm-inline-block right--1-l">
+					<a id="logout" href="#" role="button" class="nav-link">Logout</a>
+				</li>
 			</ul>
 
 			<!-- Right navbar links -->
@@ -55,7 +58,7 @@
 		<!-- Main Sidebar Container -->
 		<aside class="main-sidebar sidebar-dark-primary elevation-4">
 			<!-- Brand Logo -->
-			<a href="../../index3.html" class="brand-link"> <img
+			<a href=""/home"" class="brand-link"> <img
 					src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
 					class="brand-image img-circle elevation-3" style="opacity: .8">
 				<span class="brand-text font-weight-light">Aplikasi OCR</span>
@@ -92,12 +95,32 @@
 								<!--										<p>Form Biodata</p>-->
 								<!--								</a></li>-->
 								<li class="nav-item"><a href="/editpath"
-														class="nav-link"> <i class="far fa-circle nav-icon"></i>
+														class="nav-link active"> <i class="far fa-circle nav-icon"></i>
 									<p>Edit Folder Path</p>
 								</a></li>
 								<li class="nav-item"><a href="/setting"
 														class="nav-link"> <i class="far fa-circle nav-icon"></i>
 									<p>Edit Scheduler</p>
+								</a></li>
+								<!--								<li class="nav-item"><a href="/tabelbiodata"-->
+								<!--									class="nav-link"> <i class="far fa-circle nav-icon"></i>-->
+								<!--										<p>Tabel Biodata</p>-->
+								<!--								</a></li>-->
+							</ul></li>
+						<li class="nav-item has-treeview menu-close"><a href="#"
+																	   class="nav-link"> <i class="nav-icon fas fa-th"></i>
+							<p>
+								User (Admin only) <i class="fas fa-angle-left right"></i>
+							</p>
+						</a>
+							<ul class="nav nav-treeview">
+								<!--								<li class="nav-item"><a href="/formbiodata"-->
+								<!--									class="nav-link"> <i class="far fa-circle nav-icon"></i>-->
+								<!--										<p>Form Biodata</p>-->
+								<!--								</a></li>-->
+								<li class="nav-item"><a href="/user"
+														class="nav-link"> <i class="far fa-circle nav-icon"></i>
+									<p>Add New User</p>
 								</a></li>
 								<!--								<li class="nav-item"><a href="/tabelbiodata"-->
 								<!--									class="nav-link"> <i class="far fa-circle nav-icon"></i>-->
@@ -217,9 +240,23 @@
 
 
 	<script>
+		if (localStorage.getItem("token") == null || localStorage.getItem("token") == '') {
+			swal({
+				title: "Error!",
+				text: "Please login first",
+				type: "success",
+				buttons: false,
+				timer: 3000
+			});
+			setTimeout(function(){
+				window.location.replace("/login")
+			},2000);
+
+		}
 		$.ajax({
 			type: 'GET',
 			url: '/path',
+			headers: {"Authorization": "Bearer " + localStorage.getItem('token')},
 			success: function (data) {
 				console.log(data)
 				$('#upload').val(data.uploadPath);
@@ -243,6 +280,7 @@
 				type: 'POST',
 				dataType: 'json',
 				url: '/path',
+				headers: {"Authorization": "Bearer " + localStorage.getItem('token')},
 				data: JSON.stringify(req),
 				success: function (data) {
 					swal({
@@ -261,6 +299,13 @@
 				}
 			});
 		});
+	</script>
+
+	<script>
+		$("#logout").click(function() {
+			localStorage.removeItem('token');
+			window.location.replace("/login")
+		})
 	</script>
 
 </body>
