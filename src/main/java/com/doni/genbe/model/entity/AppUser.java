@@ -18,7 +18,7 @@ import java.util.Date;
 @Data
 @Builder
 @ToString
-@JsonIgnoreProperties({"activationToken", "activationToken", "expiredOtpCode", "password", "pin", "createdBy"})
+@JsonIgnoreProperties({"password", "pin"})
 public class AppUser {
 
     @Id
